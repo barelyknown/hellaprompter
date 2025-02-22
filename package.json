@@ -1,0 +1,21 @@
+{
+    "name": "hellaprompter",
+    "version": "1.0.0",
+    "description": "",
+    "main": "build.js",
+    "scripts": {
+        "build": "node build.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@tailwindcss/postcss": "^4.0.8",
+        "gray-matter": "^4.0.3",
+        "marked": "^15.0.7",
+        "postcss": "^8.5.3",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "tailwindcss": "^4.0.8"
+    }
+}

@@ -17,7 +17,7 @@ const openai = new OpenAI({
 const PROMPTS_DIR = path.join(__dirname, '../prompts');
 const MARKDOWN_GUIDE_PATH = path.join(__dirname, '../MARKDOWN_GUIDE.md');
 
-async function formatCompletion(completionText, markdownGuide) {
+async function formatCompletion(completionText, markdownGuide, title) {
   try {
     console.log(`Formatting completion with OpenAI API...`);
     
@@ -30,17 +30,20 @@ You are helping to format an AI-generated article according to our markdown styl
 MARKDOWN STYLE GUIDE:
 ${markdownGuide}
 
+ARTICLE TITLE: "${title}"
+
 ORIGINAL ARTICLE TEXT:
 ${cleanedCompletionText}
 
 Your task is to reformat the original article text to follow our markdown style guide.
 Make sure to:
 1. Format headings correctly (# for title, ## for sections, etc.)
-2. Ensure proper paragraph spacing
-3. Format lists and code blocks correctly
-4. Apply appropriate emphasis with *italic* or **bold** formatting
-5. Keep all the original content and information
-6. Do not add any extra content, commentary, or notes
+2. Use the provided article title as the main heading (# Title) if the original doesn't have a clear title
+3. Ensure proper paragraph spacing
+4. Format lists and code blocks correctly
+5. Apply appropriate emphasis with *italic* or **bold** formatting
+6. Keep all the original content and information
+7. Do not add any extra content, commentary, or notes
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;
@@ -99,7 +102,7 @@ async function processCompletions() {
         const metadata = await fs.readJson(metadataPath);
         
         // Format the completion using OpenAI
-        const formattedCompletion = await formatCompletion(completionText, markdownGuide);
+        const formattedCompletion = await formatCompletion(completionText, markdownGuide, metadata.title);
         
         // Write the formatted content to completion.md
         await fs.writeFile(completionMdPath, formattedCompletion);

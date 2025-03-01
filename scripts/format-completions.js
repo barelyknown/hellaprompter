@@ -44,6 +44,9 @@ Make sure to:
 5. Apply appropriate emphasis with *italic* or **bold** formatting
 6. Keep all the original content and information
 7. Do not add any extra content, commentary, or notes
+8. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
+9. Replace special quotes (", "), dashes (—, –) and other typographic characters with their standard ASCII equivalents
+10. Use only standard ASCII characters that are guaranteed to render properly in all browsers
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;

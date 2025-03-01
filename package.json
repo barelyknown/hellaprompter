@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "marked": "^4.3.0",
-    "openai": "^4.28.0"
+    "openai": "^4.86.1"
   },
   "devDependencies": {
     "browser-sync": "^2.29.3",

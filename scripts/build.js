@@ -65,7 +65,7 @@ async function buildArticlePage(articleDir, slug) {
               <span class="prompt-service">${metadata.service}</span>
             </div>
             <div class="prompt-content">
-              <p>${metadata.prompt}</p>
+              ${marked.parse(metadata.prompt)}
             </div>
             <div class="prompt-footer">
               <div class="article-info">

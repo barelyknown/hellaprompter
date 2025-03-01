@@ -1,10 +1,21 @@
 const fs = require('fs-extra');
 const path = require('path');
 const marked = require('marked');
+const crypto = require('crypto');
 
 const PROMPTS_DIR = path.join(__dirname, '../prompts');
 const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
+
+// Function to calculate file hash for fingerprinting
+function calculateHash(filePath) {
+  const fileBuffer = fs.readFileSync(filePath);
+  return crypto
+    .createHash('md5')
+    .update(fileBuffer)
+    .digest('hex')
+    .substring(0, 8); // Use first 8 characters of hash
+}
 
 async function buildArticlePage(articleDir, slug) {
   const completionPath = path.join(articleDir, 'completion.md');
@@ -49,7 +60,7 @@ async function buildArticlePage(articleDir, slug) {
       <meta name="twitter:description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
       <meta name="twitter:creator" content="@barelyknown">
       
-      <link rel="stylesheet" href="../../css/style.css">
+      <link rel="stylesheet" href="../../${cssPath}">
     </head>
     <body>
       <header>
@@ -80,7 +91,7 @@ async function buildArticlePage(articleDir, slug) {
           </div>
         </article>
       </main>
-      <script src="../../js/main.js"></script>
+      <script src="../../${jsPath}"></script>
     </body>
     </html>`
   );
@@ -99,13 +110,31 @@ async function build() {
   // Clean dist directory
   await fs.emptyDir(DIST_DIR);
   
-  // Copy static assets
-  await fs.copy(path.join(SRC_DIR, 'css'), path.join(DIST_DIR, 'css'));
-  await fs.copy(path.join(SRC_DIR, 'js'), path.join(DIST_DIR, 'js'));
+  // Create asset directories
+  await fs.ensureDir(path.join(DIST_DIR, 'css'));
+  await fs.ensureDir(path.join(DIST_DIR, 'js'));
+  
+  // Copy and fingerprint CSS
+  const cssSourcePath = path.join(SRC_DIR, 'css', 'style.css');
+  const cssHash = calculateHash(cssSourcePath);
+  const cssDestFilename = `style.${cssHash}.css`;
+  await fs.copy(cssSourcePath, path.join(DIST_DIR, 'css', cssDestFilename));
+  
+  // Copy and fingerprint JS
+  const jsSourcePath = path.join(SRC_DIR, 'js', 'main.js');
+  const jsHash = calculateHash(jsSourcePath);
+  const jsDestFilename = `main.${jsHash}.js`;
+  await fs.copy(jsSourcePath, path.join(DIST_DIR, 'js', jsDestFilename));
+  
+  // Copy images (no need to fingerprint)
   await fs.copy(path.join(SRC_DIR, 'images'), path.join(DIST_DIR, 'images'));
   
   // Copy CNAME file
   await fs.copy(path.join(__dirname, '../CNAME'), path.join(DIST_DIR, 'CNAME'));
+  
+  // Store asset paths for use in templates
+  const cssPath = `css/${cssDestFilename}`;
+  const jsPath = `js/${jsDestFilename}`;
   
   // Get all prompt directories
   const promptDirs = await fs.readdir(PROMPTS_DIR);
@@ -171,7 +200,7 @@ async function build() {
       <meta name="twitter:description" content="A collection of articles generated from AI prompts. Questions > answers.">
       <meta name="twitter:creator" content="@barelyknown">
       
-      <link rel="stylesheet" href="css/style.css">
+      <link rel="stylesheet" href="${cssPath}">
     </head>
     <body>
       <header>
@@ -187,7 +216,7 @@ async function build() {
           ${articlesListHtml}
         </div>
       </main>
-      <script src="js/main.js"></script>
+      <script src="${jsPath}"></script>
     </body>
     </html>`
   );

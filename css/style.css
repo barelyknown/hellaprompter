@@ -216,8 +216,77 @@ h2, h3, h4 {
   font-size: 1rem;
 }
 
+/* Formatting for markdown elements in prompt */
 .prompt-content p {
-  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.prompt-content p:last-child {
+  margin-bottom: 0;
+}
+
+.prompt-content ul, 
+.prompt-content ol {
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+}
+
+.prompt-content li {
+  margin-bottom: 0.5rem;
+}
+
+.prompt-content h1, 
+.prompt-content h2, 
+.prompt-content h3 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
+  color: #222;
+}
+
+.prompt-content h1 {
+  font-size: 1.6rem;
+}
+
+.prompt-content h2 {
+  font-size: 1.4rem;
+}
+
+.prompt-content h3 {
+  font-size: 1.2rem;
+}
+
+.prompt-content strong {
+  color: #333;
+}
+
+.prompt-content em {
+  font-style: italic;
+}
+
+.prompt-content code {
+  background-color: #f5f5f5;
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: monospace;
+  font-size: 0.9rem;
+}
+
+.prompt-content pre {
+  background-color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}
+
+.prompt-content blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 3px solid #e0e0e0;
+  font-style: italic;
+  color: #555;
 }
 
 .article-content {

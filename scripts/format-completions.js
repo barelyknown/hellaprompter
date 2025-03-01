@@ -21,6 +21,9 @@ async function formatCompletion(completionText, markdownGuide) {
   try {
     console.log(`Formatting completion with OpenAI API...`);
     
+    // Pre-process: Strip text fragments from URLs in the completion text
+    const cleanedCompletionText = completionText.replace(/(https?:\/\/[^\s]+?)#:~:text=[^\s)]+/g, '$1');
+    
     const prompt = `
 You are helping to format an AI-generated article according to our markdown style guide.
 
@@ -28,7 +31,7 @@ MARKDOWN STYLE GUIDE:
 ${markdownGuide}
 
 ORIGINAL ARTICLE TEXT:
-${completionText}
+${cleanedCompletionText}
 
 Your task is to reformat the original article text to follow our markdown style guide.
 Make sure to:

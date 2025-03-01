@@ -17,7 +17,7 @@ function calculateHash(filePath) {
     .substring(0, 8); // Use first 8 characters of hash
 }
 
-async function buildArticlePage(articleDir, slug) {
+async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   const completionPath = path.join(articleDir, 'completion.md');
   
   // Check if completion.md exists, if not, skip this directory
@@ -147,7 +147,7 @@ async function build() {
       const stats = await fs.stat(articleDir);
       
       if (stats.isDirectory()) {
-        const article = await buildArticlePage(articleDir, dir);
+        const article = await buildArticlePage(articleDir, dir, cssPath, jsPath);
         // Only add the article if it's not null (has a completion.md file)
         if (article) {
           articles.push(article);

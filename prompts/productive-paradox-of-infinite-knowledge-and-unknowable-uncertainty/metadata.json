@@ -1,6 +1,6 @@
 {
-  "prompt": "Write an article about computational algorithms used by ancient civilizations. Cover the Babylonian method for calculating square roots, Egyptian multiplication, the Euclidean algorithm, and the Chinese Remainder Theorem. Explain how these algorithms worked and why they're remarkable for their time.",
+  "prompt": "According to David Deutch, Knowledge is Infinite. According to Nassim Taleb, randomness is unavoidable and unknowable. How do you square that circle?",
   "title": "The Paradox of Infinite Knowledge and Unknowable Uncertainty",
   "date": "2025-02-20",
-  "service": "ChatGPT 4o"
+  "service": "ChatGPT (gpt-4o)"
 }

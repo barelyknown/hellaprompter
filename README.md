@@ -31,7 +31,7 @@ The site is automatically deployed to GitHub Pages when changes are pushed to th
 ## Structure
 
 - `prompts/`: Contains directories for each article, with each directory containing:
-  - `article.md`: The article content in Markdown format
+  - `completion.md`: The article content in Markdown format
   - `metadata.json`: Metadata about the article (prompt, title, date, service)
 - `src/`: Source files for the static site:
   - `css/`: Stylesheets

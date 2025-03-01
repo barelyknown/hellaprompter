@@ -7,7 +7,7 @@ const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
 
 async function buildArticlePage(articleDir, slug) {
-  const mdContent = await fs.readFile(path.join(articleDir, 'article.md'), 'utf8');
+  const mdContent = await fs.readFile(path.join(articleDir, 'completion.md'), 'utf8');
   const metadata = await fs.readJson(path.join(articleDir, 'metadata.json'));
   
   const htmlContent = marked.parse(mdContent);

@@ -1,5 +1,9 @@
 # Hellaprompter Markdown Guide
 
+## File Structure
+- Filename: `completion.md`
+- Accompanying metadata file: `metadata.json`
+
 ## Basic Structure
 ```markdown
 # Article Title

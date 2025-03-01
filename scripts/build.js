@@ -7,7 +7,15 @@ const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
 
 async function buildArticlePage(articleDir, slug) {
-  const mdContent = await fs.readFile(path.join(articleDir, 'completion.md'), 'utf8');
+  const completionPath = path.join(articleDir, 'completion.md');
+  
+  // Check if completion.md exists, if not, skip this directory
+  if (!await fs.pathExists(completionPath)) {
+    console.log(`Skipping ${slug}: No completion.md file found`);
+    return null;
+  }
+  
+  const mdContent = await fs.readFile(completionPath, 'utf8');
   const metadata = await fs.readJson(path.join(articleDir, 'metadata.json'));
   
   const htmlContent = marked.parse(mdContent);
@@ -111,7 +119,10 @@ async function build() {
       
       if (stats.isDirectory()) {
         const article = await buildArticlePage(articleDir, dir);
-        articles.push(article);
+        // Only add the article if it's not null (has a completion.md file)
+        if (article) {
+          articles.push(article);
+        }
       }
     } catch (err) {
       console.error(`Error processing ${dir}:`, err);

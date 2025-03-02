@@ -54,6 +54,9 @@ jobs:
           else
             echo "No changes to commit"
           fi
+      
+      - name: Fetch latest changes after commit 🔄
+        run: git pull
         
       - name: Build Site 🏗️
         run: npm run build

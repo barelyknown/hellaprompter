@@ -23,6 +23,12 @@ function calculateHash(filePath) {
 
 // Function to generate socialDescription for existing metadata
 async function generateSocialDescription(prompt, completion, title) {
+  // Check if running in GitHub Actions or manually enabled
+  if (!process.env.GITHUB_ACTIONS && !process.env.ENABLE_LOCAL_API_TASKS) {
+    console.log('Not running in GitHub Actions and ENABLE_LOCAL_API_TASKS not set. Skipping social description generation.');
+    return null;
+  }
+  
   try {
     console.log(`Generating social description for "${title}"...`);
     
@@ -250,9 +256,15 @@ async function build() {
           if (metadata.postToX === true && !metadata.xPostUrl && 
               process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET &&
               process.env.TWITTER_REFRESH_TOKEN) {
-            console.log(`Posting ${dir} to X...`);
-            // postToX already logs success message, so we don't need to log it again
-            await postToX(dir);
+            
+            // Only post to X if in GitHub Actions or explicitly enabled
+            if (process.env.GITHUB_ACTIONS || process.env.ENABLE_LOCAL_API_TASKS) {
+              console.log(`Posting ${dir} to X...`);
+              // postToX already logs success message, so we don't need to log it again
+              await postToX(dir);
+            } else {
+              console.log(`Skipping posting ${dir} to X (not in GitHub Actions and ENABLE_LOCAL_API_TASKS not set)`);
+            }
           }
         }
       }

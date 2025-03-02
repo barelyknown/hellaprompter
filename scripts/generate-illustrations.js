@@ -321,6 +321,13 @@ async function processPrompts() {
 // Main function
 async function main() {
   try {
+    // Check if running in GitHub Actions or manually enabled
+    if (!process.env.GITHUB_ACTIONS && !process.env.ENABLE_LOCAL_API_TASKS) {
+      console.log('Not running in GitHub Actions and ENABLE_LOCAL_API_TASKS not set. Skipping API tasks.');
+      console.log('To run API tasks locally, set ENABLE_LOCAL_API_TASKS=true in your environment.');
+      return;
+    }
+    
     await processPrompts();
   } catch (error) {
     console.error('Failed to process illustrations:', error);

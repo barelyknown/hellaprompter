@@ -74,6 +74,13 @@ IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any mark
 async function processCompletions() {
   console.log('Looking for completion.txt files to process...');
   
+  // Check if running in GitHub Actions or manually enabled
+  if (!process.env.GITHUB_ACTIONS && !process.env.ENABLE_LOCAL_API_TASKS) {
+    console.log('Not running in GitHub Actions and ENABLE_LOCAL_API_TASKS not set. Skipping API tasks.');
+    console.log('To run API tasks locally, set ENABLE_LOCAL_API_TASKS=true in your environment.');
+    return;
+  }
+  
   // Read the markdown guide
   const markdownGuide = await fs.readFile(MARKDOWN_GUIDE_PATH, 'utf8');
   

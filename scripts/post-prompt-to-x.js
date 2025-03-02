@@ -9,6 +9,13 @@ if (!promptSlug) {
   process.exit(1);
 }
 
+// Check if running in GitHub Actions or manually enabled
+if (!process.env.GITHUB_ACTIONS && !process.env.ENABLE_LOCAL_API_TASKS) {
+  console.log('Not running in GitHub Actions and ENABLE_LOCAL_API_TASKS not set. Skipping posting to X.');
+  console.log('To post to X locally, set ENABLE_LOCAL_API_TASKS=true in your environment.');
+  process.exit(0);
+}
+
 // Verify Twitter OAuth 2.0 credentials
 if (!process.env.TWITTER_CLIENT_ID || !process.env.TWITTER_CLIENT_SECRET || 
     !process.env.TWITTER_REFRESH_TOKEN) {

@@ -17,6 +17,51 @@ function calculateHash(filePath) {
     .substring(0, 8); // Use first 8 characters of hash
 }
 
+// Function to generate socialDescription for existing metadata
+async function generateSocialDescription(prompt, completion, title) {
+  try {
+    console.log(`Generating social description for "${title}"...`);
+    
+    const openai = new (require('openai')).OpenAI({
+      apiKey: process.env.OPENAI_API_KEY
+    });
+    
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content: `You are an expert at creating engaging social media descriptions for articles. 
+Your task is to write a compelling description (1-2 sentences) that would make someone want to click and read the full article when they see it shared on social media.
+
+Guidelines:
+- Be concise and intriguing (max 150 characters)
+- Capture the essence of the article without giving everything away
+- Avoid clickbait language, hyperbole, or anything that feels inauthentic
+- Use natural, conversational language that creates curiosity
+- Do not use hashtags, emojis, or calls to action like "click to read more"
+
+Simply return the description with no additional commentary or explanation.`
+        },
+        {
+          role: "user", 
+          content: `Create a social media description for an article with:
+
+Title: "${title}"
+Prompt: "${prompt.substring(0, 300)}${prompt.length > 300 ? '...' : ''}"
+Content (excerpt): "${completion.substring(0, 500)}${completion.length > 500 ? '...' : ''}"`
+        }
+      ],
+      max_tokens: 200
+    });
+    
+    return response.choices[0].message.content.trim();
+  } catch (error) {
+    console.error('Error generating social description:', error);
+    return null;
+  }
+}
+
 async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   const completionPath = path.join(articleDir, 'completion.md');
   
@@ -27,7 +72,24 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   }
   
   const mdContent = await fs.readFile(completionPath, 'utf8');
-  const metadata = await fs.readJson(path.join(articleDir, 'metadata.json'));
+  const metadataPath = path.join(articleDir, 'metadata.json');
+  const metadata = await fs.readJson(metadataPath);
+  
+  // Generate social description if it doesn't exist and we have an API key
+  if (!metadata.socialDescription && process.env.OPENAI_API_KEY) {
+    console.log(`No social description found for ${slug}, generating one...`);
+    const socialDescription = await generateSocialDescription(
+      metadata.prompt,
+      mdContent,
+      metadata.title
+    );
+    
+    if (socialDescription) {
+      metadata.socialDescription = socialDescription;
+      console.log(`Added social description for ${slug}: ${socialDescription}`);
+      await fs.writeJson(metadataPath, metadata, { spaces: 2 });
+    }
+  }
   
   const htmlContent = marked.parse(mdContent);
   
@@ -70,7 +132,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta property="og:type" content="article">
       <meta property="og:url" content="https://www.hellaprompter.com/prompts/${slug}/">
       <meta property="og:title" content="hellaprompter > ${metadata.title}">
-      <meta property="og:description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
+      <meta property="og:description" content="${metadata.socialDescription || metadata.prompt.substring(0, 150)}${!metadata.socialDescription && metadata.prompt.length > 150 ? '...' : ''}">
       ${metadata.illustration === true && metadata.illustrationPath ? `<meta property="og:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
       <meta property="article:published_time" content="${metadata.date}">
       
@@ -78,7 +140,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta name="twitter:card" content="summary_large_image">
       <meta name="twitter:url" content="https://www.hellaprompter.com/prompts/${slug}/">
       <meta name="twitter:title" content="hellaprompter > ${metadata.title}">
-      <meta name="twitter:description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
+      <meta name="twitter:description" content="${metadata.socialDescription || metadata.prompt.substring(0, 150)}${!metadata.socialDescription && metadata.prompt.length > 150 ? '...' : ''}">
       ${metadata.illustration === true && metadata.illustrationPath ? `<meta name="twitter:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
       <meta name="twitter:creator" content="@barelyknown">
       

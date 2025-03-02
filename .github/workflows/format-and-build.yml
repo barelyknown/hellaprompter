@@ -45,9 +45,10 @@ jobs:
           
           # Check if there are any changes to commit
           if [[ -n $(git status --porcelain prompts) ]]; then
-            git add prompts/*/completion.md
-            git add prompts/*/images/
-            git add prompts/*/metadata.json
+            # Add all changed files in prompts directory
+            git add prompts/*/completion.md || true
+            git add prompts/*/*.png || true
+            git add prompts/*/metadata.json || true
             git commit -m "Auto-format completions and generate illustrations" || true
             git push
           else

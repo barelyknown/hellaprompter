@@ -8,12 +8,18 @@
     "build": "node scripts/build.js",
     "watch": "nodemon --watch src --watch prompts --ext js,css,html,md,json --exec \"npm run build\" --delay 0.5",
     "format-completions": "node scripts/format-completions.js",
-    "generate-illustrations": "node scripts/generate-illustrations.js"
+    "generate-illustrations": "node scripts/generate-illustrations.js",
+    "post-to-x": "node scripts/post-prompt-to-x.js",
+    "get-twitter-token": "node scripts/get-twitter-token.js"
   },
   "dependencies": {
     "marked": "^4.3.0",
     "node-fetch": "^2.6.9",
-    "openai": "^4.86.1"
+    "oauth": "^0.10.0",
+    "oauth-pkce": "^0.0.6",
+    "open": "^10.1.0",
+    "openai": "^4.86.1",
+    "twitter-api-v2": "^1.20.2"
   },
   "devDependencies": {
     "browser-sync": "^2.29.3",

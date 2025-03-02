@@ -27,7 +27,7 @@ npm run watch
 ## Adding New Content
 
 1. Create a new directory under `prompts/` with a descriptive name (e.g., `prompts/quantum-computing/`)
-2. Add a `metadata.json` file with the prompt, title, date, and service
+2. Add a `metadata.json` file with the prompt, title, date, service, and optional `postToX` flag
 3. To add content, you have two options:
 
    **Option 1: Add formatted markdown directly**
@@ -42,17 +42,33 @@ npm run watch
 
 The site is automatically deployed to GitHub Pages when changes are pushed to the main branch.
 
+## Posting to X (Twitter)
+
+To enable posting to X (Twitter):
+
+1. Set up Twitter OAuth 2.0 credentials:
+   - Add your Twitter Client ID and Secret to `.env`
+   - Run `npm run get-twitter-token` and follow the instructions
+   - Add the generated Refresh Token to your `.env` file
+2. Add `"postToX": true` to a prompt's `metadata.json`
+3. Build the site with `npm run build`, which will automatically post new prompts to X
+4. To post a specific prompt manually: `npm run post-to-x prompt-directory-name`
+
+Once a prompt is posted, its `metadata.json` will be updated with an `xPostUrl` field containing the X post URL.
+
 ## Structure
 
 - `prompts/`: Contains directories for each article, with each directory containing:
   - `completion.md`: The article content in Markdown format
-  - `metadata.json`: Metadata about the article (prompt, title, date, service)
+  - `metadata.json`: Metadata about the article (prompt, title, date, service, postToX, xPostUrl)
 - `src/`: Source files for the static site:
   - `css/`: Stylesheets
   - `js/`: JavaScript files
   - `images/`: Images and favicon
 - `scripts/`: Build scripts
   - `build.js`: Main script for generating the static site
+  - `post-to-x.js`: Module for posting to X
+  - `post-prompt-to-x.js`: CLI script for posting a prompt to X
 
 ## License
 

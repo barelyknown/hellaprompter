@@ -1,0 +1,9 @@
+{
+  "prompt": "Your prompt text here",
+  "title": "Your article title",
+  "date": "YYYY-MM-DD",
+  "service": "ChatGPT (gpt-4o)",
+  "socialDescription": "",
+  "postToX": true,
+  "illustration": false
+}

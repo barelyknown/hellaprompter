@@ -7,6 +7,12 @@ require('dotenv').config();
 // Post a prompt to X (Twitter)
 async function postToX(promptSlug) {
   try {
+    // Check if running in GitHub Actions environment
+    if (!process.env.GITHUB_ACTIONS) {
+      console.log('Not running in GitHub Actions environment. Skipping post to X.');
+      return null;
+    }
+
     // Path to the prompt's metadata
     const promptDir = path.join(__dirname, '../prompts', promptSlug);
     const metadataPath = path.join(promptDir, 'metadata.json');

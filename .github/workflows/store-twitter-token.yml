@@ -1,0 +1,56 @@
+name: Update Twitter Token
+
+on:
+  workflow_call:
+    inputs:
+      token:
+        description: 'New Twitter refresh token'
+        required: true
+        type: string
+    secrets:
+      GH_PAT:
+        required: true
+
+jobs:
+  update-token:
+    env:
+      GH_TOKEN: ${{ secrets.GH_PAT }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: |
+          npm install --global sodium-native@4.0.4
+          echo "NODE_PATH=$(npm root -g)" >> $GITHUB_ENV
+      - name: Update Twitter Token
+        uses: actions/github-script@v6
+        env:
+          TWITTER_REFRESH_TOKEN: ${{ inputs.token }}
+        with:
+          result-encoding: string
+          github-token: ${{ env.GITHUB_TOKEN }}
+          script: |
+            const sodium = require('sodium-native');
+            const { data: {key: publicKey, key_id: keyId} } = await github.rest.actions.getRepoPublicKey({...context.repo});
+            if (publicKey) {
+              const key = Buffer.from(publicKey, 'base64');
+              const message = Buffer.from(process.env.TWITTER_REFRESH_TOKEN);
+              const ciphertext = Buffer.alloc(message.length + sodium.crypto_box_SEALBYTES);
+
+              sodium.crypto_box_seal(ciphertext, message, key);
+              const encryptedToken = ciphertext.toString('base64');
+
+              await github.rest.actions.createOrUpdateRepoSecret({
+                ...context.repo, 
+                secret_name: 'TWITTER_REFRESH_TOKEN',
+                encrypted_value: encryptedToken,
+                key_id: keyId,
+              });
+              console.log('✅ Successfully updated TWITTER_REFRESH_TOKEN secret');
+            } else {
+              core.error('Failed to fetch the public key. Unable to update secret');
+            }

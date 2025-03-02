@@ -2,10 +2,14 @@ const fs = require('fs-extra');
 const path = require('path');
 const marked = require('marked');
 const crypto = require('crypto');
+require('dotenv').config();
 
 const PROMPTS_DIR = path.join(__dirname, '../prompts');
 const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
+
+// Import post-to-x functionality
+const { postToX } = require('./post-to-x');
 
 // Function to calculate file hash for fingerprinting
 function calculateHash(filePath) {
@@ -31,17 +35,18 @@ async function generateSocialDescription(prompt, completion, title) {
       messages: [
         {
           role: "system",
-          content: `You are an expert at creating engaging social media descriptions for articles. 
-Your task is to write a compelling description (1-2 sentences) that would make someone want to click and read the full article when they see it shared on social media.
+          content: `You are an expert at creating engaging social media descriptions for articles.
+Your task is to formulate a compelling question that the article answers.
 
 Guidelines:
+- Frame the description as a direct question about the article's core topic
 - Be concise and intriguing (max 150 characters)
 - Capture the essence of the article without giving everything away
-- Avoid clickbait language, hyperbole, or anything that feels inauthentic
+- Avoid introductory phrases like "Discover why" or "Understand how"
 - Use natural, conversational language that creates curiosity
-- Do not use hashtags, emojis, or calls to action like "click to read more"
+- Do not use hashtags, emojis, or calls to action
 
-Simply return the description with no additional commentary or explanation.`
+Simply return the question with no additional commentary or explanation.`
         },
         {
           role: "user", 
@@ -237,6 +242,18 @@ async function build() {
         // Only add the article if it's not null (has a completion.md file)
         if (article) {
           articles.push(article);
+          
+          // Check if we should post to X
+          const metadataPath = path.join(articleDir, 'metadata.json');
+          const metadata = await fs.readJson(metadataPath);
+          
+          if (metadata.postToX === true && !metadata.xPostUrl && 
+              process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET &&
+              process.env.TWITTER_REFRESH_TOKEN) {
+            console.log(`Posting ${dir} to X...`);
+            // postToX already logs success message, so we don't need to log it again
+            await postToX(dir);
+          }
         }
       }
     } catch (err) {

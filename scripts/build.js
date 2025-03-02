@@ -34,6 +34,26 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   // Create prompt directory
   await fs.ensureDir(path.join(DIST_DIR, 'prompts', slug));
   
+  // Check if illustration exists and copy it to the dist directory
+  let illustrationHtml = '';
+  if (metadata.illustration === true && metadata.illustrationPath) {
+    const illustrationSourcePath = path.join(articleDir, metadata.illustrationPath);
+    if (await fs.pathExists(illustrationSourcePath)) {
+      // Create images directory for this prompt
+      await fs.ensureDir(path.join(DIST_DIR, 'prompts', slug, 'images'));
+      
+      // Copy the illustration
+      const illustrationDestPath = path.join(DIST_DIR, 'prompts', slug, 'images', metadata.illustrationPath);
+      await fs.copy(illustrationSourcePath, illustrationDestPath);
+      
+      // Add the illustration HTML
+      illustrationHtml = `
+      <div class="illustration-container">
+        <img src="images/${metadata.illustrationPath}" alt="New Yorker-style illustration for ${metadata.title}" class="prompt-illustration">
+      </div>`;
+    }
+  }
+  
   // Create article HTML file
   await fs.writeFile(
     path.join(DIST_DIR, 'prompts', slug, 'index.html'),
@@ -51,6 +71,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta property="og:url" content="https://www.hellaprompter.com/prompts/${slug}/">
       <meta property="og:title" content="hellaprompter > ${metadata.title}">
       <meta property="og:description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
+      ${metadata.illustration === true && metadata.illustrationPath ? `<meta property="og:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
       <meta property="article:published_time" content="${metadata.date}">
       
       <!-- Twitter -->
@@ -58,6 +79,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta name="twitter:url" content="https://www.hellaprompter.com/prompts/${slug}/">
       <meta name="twitter:title" content="hellaprompter > ${metadata.title}">
       <meta name="twitter:description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
+      ${metadata.illustration === true && metadata.illustrationPath ? `<meta name="twitter:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
       <meta name="twitter:creator" content="@barelyknown">
       
       <link rel="stylesheet" href="../../${cssPath}">
@@ -85,6 +107,8 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
               </div>
             </div>
           </div>
+          
+          ${illustrationHtml}
           
           <div class="article-content">
             ${htmlContent}

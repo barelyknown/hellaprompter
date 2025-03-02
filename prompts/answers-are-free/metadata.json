@@ -2,5 +2,9 @@
   "prompt": "Horace Dediu once said something like, \"My answers are free, but my questions will cost you.\" Explain what this means, and how it's especially true in the age of smart large language models.",
   "title": "My Answers are Free, but My Questions Will Cost You",
   "date": "2025-03-01",
-  "service": "ChatGPT Deep Research"
+  "service": "ChatGPT Deep Research",
+  "illustration": true,
+  "illustrationPath": "illustration-2-1740927724270.png",
+  "sceneDescription": "A small kiosk stands in the foreground with a bored attendant, offering a tall stack of free sheets. Nearby, an open laptop emits a soft glow, hinting at limitless information. Across the space, a single oversized question mark rests on a sleek pedestal, dangling an unmistakably hefty price tag. A few intrigued onlookers gather, drawn more to the question mark’s allure than the free stack.",
+  "illustrationExplanation": "2. This illustration effectively captures the essence of the prompt with a clear depiction of the free answers versus costly questions. The presence of a large question mark with a price tag visually represents the metaphor, and the style aligns well with The New Yorker’s sophisticated humor. The composition is visually clear and engaging."
 }

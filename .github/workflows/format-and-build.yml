@@ -32,7 +32,13 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           
-      - name: Commit formatted completions if any changes 💾
+      - name: Generate Illustrations 🖼️
+        run: npm run generate-illustrations
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IDEOGRAM_API_KEY: ${{ secrets.IDEOGRAM_API_KEY }}
+          
+      - name: Commit formatted completions and illustrations if any changes 💾
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -40,7 +46,9 @@ jobs:
           # Check if there are any changes to commit
           if [[ -n $(git status --porcelain prompts) ]]; then
             git add prompts/*/completion.md
-            git commit -m "Auto-format completions using OpenAI" || true
+            git add prompts/*/images/
+            git add prompts/*/metadata.json
+            git commit -m "Auto-format completions and generate illustrations" || true
             git push
           else
             echo "No changes to commit"

@@ -7,10 +7,12 @@
     "dev": "browser-sync start --server 'dist' --files 'dist' --no-notify",
     "build": "node scripts/build.js",
     "watch": "nodemon --watch src --watch prompts --ext js,css,html,md,json --exec \"npm run build\" --delay 0.5",
-    "format-completions": "node scripts/format-completions.js"
+    "format-completions": "node scripts/format-completions.js",
+    "generate-illustrations": "node scripts/generate-illustrations.js"
   },
   "dependencies": {
     "marked": "^4.3.0",
+    "node-fetch": "^2.6.9",
     "openai": "^4.86.1"
   },
   "devDependencies": {

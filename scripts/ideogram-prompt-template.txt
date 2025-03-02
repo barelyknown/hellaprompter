@@ -1,0 +1,15 @@
+A minimalist, black and white, New Yorker-style cartoon illustration showing:
+
+{{SCENE_DESCRIPTION}}
+
+Style must be:
+- Monochrome, black ink on white paper
+- Simple, elegant line art
+- Clean, sparse linework
+- Minimal crosshatching for shadows
+- No speech bubbles, captions, or text
+- Single-panel composition
+- Clear focal element
+- Understated visual humor
+- White background
+- No border, signature, or artist mark

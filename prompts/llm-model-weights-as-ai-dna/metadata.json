@@ -2,5 +2,6 @@
   "prompt": "I'd like to earnestly explore the idea that LLM model weights are analogous to DNA (both compress knowledge). Take that idea seriously and produce a report that supports the idea fundamentally, not just analogously.",
   "title": "LLM Model Weights as the DNA of AI",
   "date": "2025-02-22",
-  "service": "ChatGPT Deep Research"
+  "service": "ChatGPT Deep Research",
+  "illustration": true
 }

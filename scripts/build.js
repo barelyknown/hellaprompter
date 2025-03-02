@@ -113,10 +113,10 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       const illustrationDestPath = path.join(DIST_DIR, 'prompts', slug, 'images', metadata.illustrationPath);
       await fs.copy(illustrationSourcePath, illustrationDestPath);
       
-      // Add the illustration HTML
+      // Add the illustration HTML with loading attribute
       illustrationHtml = `
       <div class="illustration-container">
-        <img src="images/${metadata.illustrationPath}" alt="New Yorker-style illustration for ${metadata.title}" class="prompt-illustration">
+        <img src="images/${metadata.illustrationPath}" alt="New Yorker-style illustration for ${metadata.title}" class="prompt-illustration" loading="lazy">
       </div>`;
     }
   }

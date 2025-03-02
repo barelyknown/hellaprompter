@@ -294,6 +294,21 @@ h2, h3, h4 {
   font-size: 1.05rem;
 }
 
+/* Illustration styling */
+.illustration-container {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.prompt-illustration {
+  max-width: 100%;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 .article-content h1, 
 .article-content h2, 
 .article-content h3 {

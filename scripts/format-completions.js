@@ -42,19 +42,18 @@ Make sure to:
 3. Ensure proper paragraph spacing
 4. Format lists and code blocks correctly
 5. Apply appropriate emphasis with *italic* or **bold** formatting
-6. Keep all the original content and information
-7. Do not add any extra content, commentary, or notes
-8. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
-9. Replace special quotes (", "), dashes (—, –) and other typographic characters with their standard ASCII equivalents
-10. Use only standard ASCII characters that are guaranteed to render properly in all browsers
-11. Keep all links in standard markdown format: [link text](url)
-12. If there are multiple identical links in a row, keep only one of them
+6. Keep all the original content and information except for duplicate links
+7. If there are multiple identical links, keep the first occurrence and remove the rest
+8. Do not add any extra content, commentary, or notes
+9. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
+10. Keep all links in standard markdown format: [link text](url)
+
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;
 
     const completion = await openai.chat.completions.create({
-      model: "o3-mini",
+      model: "o1",
       messages: [{ role: "user", content: prompt }]
     });
 

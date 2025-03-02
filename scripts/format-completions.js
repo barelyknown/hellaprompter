@@ -47,6 +47,7 @@ Make sure to:
 8. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
 9. Replace special quotes (", "), dashes (—, –) and other typographic characters with their standard ASCII equivalents
 10. Use only standard ASCII characters that are guaranteed to render properly in all browsers
+11. Convert all links to standard markdown format: [link text](url)
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;

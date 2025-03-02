@@ -252,8 +252,11 @@ async function processPrompts() {
       if (await fs.pathExists(metadataPath)) {
         const metadata = await fs.readJson(metadataPath);
         
-        // Check if this prompt should have an illustration but doesn't have one yet
-        if (metadata.illustration === true && !metadata.illustrationPath) {
+        // Check if this prompt should have an illustration
+        // Either it doesn't have a path yet, or the illustration file doesn't exist
+        if (metadata.illustration === true && 
+            (!metadata.illustrationPath || 
+             !(await fs.pathExists(path.join(dirPath, metadata.illustrationPath))))) {
           console.log(`Processing ${dir} for illustration...`);
           
           // Read the completion.md and metadata

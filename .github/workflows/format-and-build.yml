@@ -1,11 +1,11 @@
 name: Format Completions and Build
 
+# THIS WORKFLOW IS DEPRECATED
+# Please use consolidated-workflow.yml instead
+# This file is kept for reference only and will be removed in the future
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
   pages: write
@@ -15,64 +15,7 @@ jobs:
   format-and-build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # Fetch all history for all branches and tags
-          lfs: true # Include Git LFS files
-
-      - name: Setup Node.js 🔧
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-          
-      - name: Install Dependencies 📦
-        run: npm install
-        
-      - name: Format Completions 📝
-        run: npm run format-completions
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          
-      - name: Generate Illustrations 🖼️
-        run: npm run generate-illustrations
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          IDEOGRAM_API_KEY: ${{ secrets.IDEOGRAM_API_KEY }}
-          
-      - name: Commit formatted completions and illustrations if any changes 💾
+      - name: Deprecated Workflow
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          
-          # Check if there are any changes to commit
-          if [[ -n $(git status --porcelain prompts) ]]; then
-            # Add all changed files in prompts directory
-            git add prompts/*/completion.md || true
-            git add prompts/*/*.png || true
-            git add prompts/*/metadata.json || true
-            git commit -m "Auto-format completions and generate illustrations" || true
-            git push
-          else
-            echo "No changes to commit"
-          fi
-      
-      - name: Fetch latest changes after commit 🔄
-        run: git pull
-        
-      - name: Debug file existence 🔍
-        run: |
-          echo "Checking for illustration files..."
-          ls -la prompts/answers-are-free/
-          echo "Ensuring metadata path matches actual files..."
-          cat prompts/answers-are-free/metadata.json
-          
-      - name: Build Site 🏗️
-        run: npm run build
-        
-      - name: Deploy to GitHub Pages 🚀
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          folder: dist
-          branch: gh-pages
+          echo "This workflow is deprecated. Please use consolidated-workflow.yml instead."
+          exit 1

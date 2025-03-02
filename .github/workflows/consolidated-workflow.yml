@@ -1,0 +1,104 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      twitter_token: ${{ steps.post-to-x.outputs.TWITTER_REFRESH_TOKEN }}
+      token_updated: ${{ steps.check-token.outputs.token_updated }}
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+          lfs: true # Include Git LFS files
+      
+      - name: Setup Node.js 🔧
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install Dependencies 📦
+        run: npm ci
+        
+      - name: Format Completions 📝
+        run: npm run format-completions
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          
+      - name: Generate Illustrations 🖼️
+        run: npm run generate-illustrations
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IDEOGRAM_API_KEY: ${{ secrets.IDEOGRAM_API_KEY }}
+          
+      - name: Commit formatted completions and illustrations if any changes 💾
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Check if there are any changes to commit
+          if [[ -n $(git status --porcelain prompts) ]]; then
+            # Add all changed files in prompts directory
+            git add prompts/*/completion.md || true
+            git add prompts/*/*.png || true
+            git add prompts/*/metadata.json || true
+            git commit -m "Auto-format completions and generate illustrations" || true
+            git push
+          else
+            echo "No changes to commit"
+          fi
+      
+      - name: Fetch latest changes after commit 🔄
+        run: git pull
+        
+      - name: Build site with Twitter posting 🐦
+        id: post-to-x
+        env:
+          TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
+          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
+          TWITTER_REFRESH_TOKEN: ${{ secrets.TWITTER_REFRESH_TOKEN }}
+        run: |
+          npm run build
+          # If a new token was generated, read it and set as output
+          if [ -f "twitter_tokens/new_refresh_token.txt" ]; then
+            echo "TWITTER_REFRESH_TOKEN<<EOF" >> $GITHUB_OUTPUT
+            cat twitter_tokens/new_refresh_token.txt >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check if token was updated
+        id: check-token
+        run: |
+          if [ -f "twitter_tokens/new_refresh_token.txt" ]; then
+            echo "token_updated=true" >> $GITHUB_OUTPUT
+          else
+            echo "token_updated=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist
+          branch: gh-pages
+
+  update-token:
+    needs: build
+    if: needs.build.outputs.token_updated == 'true'
+    uses: ./.github/workflows/store-twitter-token.yml
+    with:
+      token: ${{ needs.build.outputs.twitter_token }}
+    secrets:
+      GH_PAT: ${{ secrets.GH_PAT }}

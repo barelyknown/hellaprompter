@@ -17,6 +17,9 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # Fetch all history for all branches and tags
+          lfs: true # Include Git LFS files
 
       - name: Setup Node.js 🔧
         uses: actions/setup-node@v3
@@ -58,6 +61,13 @@ jobs:
       - name: Fetch latest changes after commit 🔄
         run: git pull
         
+      - name: Debug file existence 🔍
+        run: |
+          echo "Checking for illustration files..."
+          ls -la prompts/answers-are-free/
+          echo "Ensuring metadata path matches actual files..."
+          cat prompts/answers-are-free/metadata.json
+          
       - name: Build Site 🏗️
         run: npm run build
         

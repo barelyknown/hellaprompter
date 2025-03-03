@@ -135,14 +135,14 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>hellaprompter > ${metadata.title}</title>
+      <title>${metadata.title}</title>
       <meta name="description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
       <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
       
       <!-- Open Graph / Facebook -->
       <meta property="og:type" content="article">
       <meta property="og:url" content="https://www.hellaprompter.com/prompts/${slug}/">
-      <meta property="og:title" content="hellaprompter > ${metadata.title}">
+      <meta property="og:title" content="${metadata.title}">
       <meta property="og:description" content="${metadata.socialDescription || metadata.prompt.substring(0, 150)}${!metadata.socialDescription && metadata.prompt.length > 150 ? '...' : ''}">
       ${metadata.illustration === true && metadata.illustrationPath ? `<meta property="og:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
       <meta property="article:published_time" content="${metadata.date}">
@@ -150,7 +150,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <!-- Twitter -->
       <meta name="twitter:card" content="summary_large_image">
       <meta name="twitter:url" content="https://www.hellaprompter.com/prompts/${slug}/">
-      <meta name="twitter:title" content="hellaprompter > ${metadata.title}">
+      <meta name="twitter:title" content="${metadata.title}">
       <meta name="twitter:description" content="${metadata.socialDescription || metadata.prompt.substring(0, 150)}${!metadata.socialDescription && metadata.prompt.length > 150 ? '...' : ''}">
       ${metadata.illustration === true && metadata.illustrationPath ? `<meta name="twitter:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
       <meta name="twitter:creator" content="@barelyknown">

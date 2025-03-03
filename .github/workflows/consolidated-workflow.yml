@@ -74,9 +74,9 @@ jobs:
           npm run build
           # If a new token was generated, read it and set as output
           if [ -f "twitter_tokens/new_refresh_token.txt" ]; then
-            echo "TWITTER_REFRESH_TOKEN<<EOT" >> $GITHUB_OUTPUT
+            echo "TWITTER_REFRESH_TOKEN<<EOF" >> $GITHUB_OUTPUT
             cat twitter_tokens/new_refresh_token.txt >> $GITHUB_OUTPUT
-            echo "EOT" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
           fi
       
       - name: Check if token was updated

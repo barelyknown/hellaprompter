@@ -137,7 +137,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>${metadata.title}</title>
       <meta name="description" content="${metadata.prompt.substring(0, 150)}${metadata.prompt.length > 150 ? '...' : ''}">
-      <link rel="icon" href="../../images/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="../../images/favicon.png" type="image/png">
       
       <!-- Open Graph / Facebook -->
       <meta property="og:type" content="article">
@@ -300,7 +300,7 @@ async function build() {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>hellaprompter</title>
       <meta name="description" content="A collection of articles generated from AI prompts. Questions > answers.">
-      <link rel="icon" href="images/favicon.ico" type="image/x-icon">
+      <link rel="icon" href="images/favicon.png" type="image/png">
       
       <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website">

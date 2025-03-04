@@ -13,6 +13,7 @@
     "get-twitter-token": "node scripts/get-twitter-token.js"
   },
   "dependencies": {
+    "feed": "^4.2.2",
     "marked": "^4.3.0",
     "node-fetch": "^2.6.9",
     "oauth": "^0.10.0",

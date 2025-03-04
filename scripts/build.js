@@ -2,6 +2,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const marked = require('marked');
 const crypto = require('crypto');
+const { Feed } = require('feed');
 require('dotenv').config();
 
 const PROMPTS_DIR = path.join(__dirname, '../prompts');
@@ -201,6 +202,61 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   };
 }
 
+// Function to generate RSS feed
+async function generateRssFeed(articles) {
+  console.log('Generating RSS feed...');
+  
+  const feed = new Feed({
+    title: "hellaprompter",
+    description: "A collection of articles generated from AI prompts. Questions > answers.",
+    id: "https://www.hellaprompter.com/",
+    link: "https://www.hellaprompter.com/",
+    language: "en",
+    favicon: "https://www.hellaprompter.com/images/favicon.png",
+    copyright: `© ${new Date().getFullYear()} hellaprompter`,
+    updated: articles.length > 0 ? new Date(articles[0].date) : new Date(),
+    feedLinks: {
+      rss: "https://www.hellaprompter.com/rss.xml"
+    },
+    author: {
+      name: "@barelyknown",
+      link: "https://x.com/barelyknown"
+    }
+  });
+
+  // Add entries to feed
+  for (const article of articles) {
+    // Get the article content
+    const articleDir = path.join(PROMPTS_DIR, article.slug);
+    const completionPath = path.join(articleDir, 'completion.md');
+    const mdContent = await fs.readFile(completionPath, 'utf8');
+    const htmlContent = marked.parse(mdContent);
+    
+    // Get metadata for more details
+    const metadataPath = path.join(articleDir, 'metadata.json');
+    const metadata = await fs.readJson(metadataPath);
+    
+    feed.addItem({
+      title: article.title,
+      id: `https://www.hellaprompter.com/prompts/${article.slug}/`,
+      link: `https://www.hellaprompter.com/prompts/${article.slug}/`,
+      description: metadata.prompt.substring(0, 280),
+      content: htmlContent,
+      author: [
+        {
+          name: "@barelyknown",
+          link: "https://x.com/barelyknown"
+        }
+      ],
+      date: new Date(article.date)
+    });
+  }
+
+  // Write the RSS feed to file
+  await fs.writeFile(path.join(DIST_DIR, 'rss.xml'), feed.rss2());
+  console.log('RSS feed generated successfully!');
+}
+
 async function build() {
   console.log('Building site...');
   
@@ -301,6 +357,7 @@ async function build() {
       <title>hellaprompter</title>
       <meta name="description" content="A collection of articles generated from AI prompts. Questions > answers.">
       <link rel="icon" href="images/favicon.png" type="image/png">
+      <link rel="alternate" type="application/rss+xml" title="hellaprompter RSS Feed" href="/rss.xml">
       
       <!-- Open Graph / Facebook -->
       <meta property="og:type" content="website">
@@ -337,6 +394,9 @@ async function build() {
   );
   
   // We're no longer creating the about page since the intro is on the main page
+
+  // Generate RSS feed
+  await generateRssFeed(articles);
 
   console.log('Site built successfully!');
 }

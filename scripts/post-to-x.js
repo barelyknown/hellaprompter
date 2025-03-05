@@ -93,8 +93,8 @@ async function postToX(promptSlug) {
           
           // Set output for GitHub workflow
           if (process.env.GITHUB_OUTPUT) {
-            const outputCmd = `TWITTER_REFRESH_TOKEN<<EOF\n${newRefreshToken}\nEOF`;
-            await fs.appendFile(process.env.GITHUB_OUTPUT, outputCmd);
+            // Use a simpler approach without HEREDOC to avoid EOF delimiter issues
+            await fs.appendFile(process.env.GITHUB_OUTPUT, `TWITTER_REFRESH_TOKEN=${newRefreshToken}\n`);
             console.log('Set refresh token as output for GitHub workflow');
           }
           

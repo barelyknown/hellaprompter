@@ -32,7 +32,7 @@ jobs:
           TWITTER_REFRESH_TOKEN: ${{ inputs.token }}
         with:
           result-encoding: string
-          github-token: ${{ env.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_PAT }}
           script: |
             const sodium = require('sodium-native');
             const { data: {key: publicKey, key_id: keyId} } = await github.rest.actions.getRepoPublicKey({...context.repo});

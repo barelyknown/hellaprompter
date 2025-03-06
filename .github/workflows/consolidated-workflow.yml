@@ -64,19 +64,9 @@ jobs:
       - name: Fetch latest changes after commit 🔄
         run: git pull
         
-      - name: Build site with Twitter posting 🐦
-        id: post-to-x
-        env:
-          TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
-          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
-          TWITTER_REFRESH_TOKEN: ${{ secrets.TWITTER_REFRESH_TOKEN }}
+      - name: Build site 🏗️
         run: |
           npm run build
-          # If a new token was generated, read it and set as output
-          if [ -f "twitter_tokens/new_refresh_token.txt" ]; then
-            # Use a simpler approach without HEREDOC to avoid EOF delimiter issues
-            echo "TWITTER_REFRESH_TOKEN=$(cat twitter_tokens/new_refresh_token.txt)" >> $GITHUB_OUTPUT
-          fi
       
       - name: Check if token was updated
         id: check-token
@@ -92,6 +82,23 @@ jobs:
         with:
           folder: dist
           branch: gh-pages
+          
+      - name: Post to X (after deployment) 🐦
+        id: post-to-x
+        env:
+          TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
+          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
+          TWITTER_REFRESH_TOKEN: ${{ secrets.TWITTER_REFRESH_TOKEN }}
+        run: |
+          # Run a script to post all eligible prompts to X
+          echo "Posting eligible prompts to X after site deployment..."
+          npm run post-all-to-x
+          
+          # If a new token was generated, read it and set as output
+          if [ -f "twitter_tokens/new_refresh_token.txt" ]; then
+            # Use a simpler approach without HEREDOC to avoid EOF delimiter issues
+            echo "TWITTER_REFRESH_TOKEN=$(cat twitter_tokens/new_refresh_token.txt)" >> $GITHUB_OUTPUT
+          fi
 
   update-token:
     needs: build

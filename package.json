@@ -10,6 +10,7 @@
     "format-completions": "node scripts/format-completions.js",
     "generate-illustrations": "node scripts/generate-illustrations.js",
     "post-to-x": "node scripts/post-prompt-to-x.js",
+    "post-all-to-x": "node scripts/post-all-to-x.js",
     "get-twitter-token": "node scripts/get-twitter-token.js"
   },
   "dependencies": {

@@ -9,8 +9,7 @@ const PROMPTS_DIR = path.join(__dirname, '../prompts');
 const SRC_DIR = path.join(__dirname, '../src');
 const DIST_DIR = path.join(__dirname, '../dist');
 
-// Import post-to-x functionality
-const { postToX } = require('./post-to-x');
+// Note: X posting is now done separately after deployment
 
 // Function to calculate file hash for fingerprinting
 function calculateHash(filePath) {
@@ -304,24 +303,7 @@ async function build() {
         // Only add the article if it's not null (has a completion.md file)
         if (article) {
           articles.push(article);
-          
-          // Check if we should post to X
-          const metadataPath = path.join(articleDir, 'metadata.json');
-          const metadata = await fs.readJson(metadataPath);
-          
-          if (metadata.postToX === true && !metadata.xPostUrl && 
-              process.env.TWITTER_CLIENT_ID && process.env.TWITTER_CLIENT_SECRET &&
-              process.env.TWITTER_REFRESH_TOKEN) {
-            
-            // Only post to X if in GitHub Actions or explicitly enabled
-            if (process.env.GITHUB_ACTIONS || process.env.ENABLE_LOCAL_API_TASKS) {
-              console.log(`Posting ${dir} to X...`);
-              // postToX already logs success message, so we don't need to log it again
-              await postToX(dir);
-            } else {
-              console.log(`Skipping posting ${dir} to X (not in GitHub Actions and ENABLE_LOCAL_API_TASKS not set)`);
-            }
-          }
+          // Note: X posting is now done separately after deployment in post-all-to-x.js
         }
       }
     } catch (err) {

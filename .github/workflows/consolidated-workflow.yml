@@ -68,6 +68,10 @@ jobs:
         run: |
           npm run build
       
+      - name: Check if token file directory exists
+        run: |
+          mkdir -p twitter_tokens
+
       - name: Check if token was updated
         id: check-token
         run: |
@@ -83,6 +87,11 @@ jobs:
           folder: dist
           branch: gh-pages
           
+      - name: Wait for GitHub Pages to deploy
+        run: |
+          echo "Waiting for GitHub Pages to deploy (30 seconds)..."
+          sleep 30
+
       - name: Post to X (after deployment) 🐦
         id: post-to-x
         env:

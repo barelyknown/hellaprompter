@@ -85,11 +85,13 @@ async function postToX(promptSlug) {
           console.log('IMPORTANT: A new refresh token has been generated!');
           console.log(`New refresh token: ${newRefreshToken}`);
           
-          // Set output for GitHub workflow
+          // Set output for GitHub workflow - this is needed by the update-token job
           if (process.env.GITHUB_OUTPUT) {
             // Use a simpler approach without HEREDOC to avoid EOF delimiter issues
             await fs.appendFile(process.env.GITHUB_OUTPUT, `TWITTER_REFRESH_TOKEN=${newRefreshToken}\n`);
-            console.log('Set refresh token as output for GitHub workflow');
+            // Also set the token_updated output to true for the GitHub workflow
+            await fs.appendFile(process.env.GITHUB_OUTPUT, `token_updated=true\n`);
+            console.log('Set refresh token and token_updated=true as outputs for GitHub workflow');
           }
           
           console.log('The token is available as an output variable and saved to twitter_tokens/new_refresh_token.txt');

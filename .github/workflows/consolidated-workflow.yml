@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       twitter_token: ${{ steps.post-to-x.outputs.TWITTER_REFRESH_TOKEN }}
-      token_updated: ${{ steps.check-token.outputs.token_updated }}
+      token_updated: ${{ steps.post-to-x.outputs.token_updated || steps.check-token.outputs.token_updated }}
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
@@ -105,8 +105,11 @@ jobs:
           
           # If a new token was generated, read it and set as output
           if [ -f "twitter_tokens/new_refresh_token.txt" ]; then
-            # Use a simpler approach without HEREDOC to avoid EOF delimiter issues
+            # Set the refresh token output
             echo "TWITTER_REFRESH_TOKEN=$(cat twitter_tokens/new_refresh_token.txt)" >> $GITHUB_OUTPUT
+            # Set token_updated to true to trigger the update-token job
+            echo "token_updated=true" >> $GITHUB_OUTPUT
+            echo "Token updated and outputs set for update-token job"
           fi
 
   update-token:

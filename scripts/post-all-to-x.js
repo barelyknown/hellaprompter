@@ -36,6 +36,7 @@ async function postAllToX() {
     // Get all prompt directories
     const promptDirs = await fs.readdir(PROMPTS_DIR);
     let postedCount = 0;
+    let eligibleCount = 0;
     
     // Process each prompt directory
     for (const dir of promptDirs) {
@@ -58,33 +59,52 @@ async function postAllToX() {
       
       // Check if eligible for posting
       if (metadata.postToX === true && !metadata.xPostUrl) {
+        eligibleCount++;
+        console.log(`[${eligibleCount}] Found eligible prompt: ${dir}`);
         console.log(`Posting ${dir} to X...`);
         
         try {
           const postUrl = await postToX(dir);
           
           if (postUrl) {
-            console.log(`Successfully posted ${dir} to X: ${postUrl}`);
+            console.log(`✅ Successfully posted ${dir} to X: ${postUrl}`);
             postedCount++;
             
             // Add a small delay between posts to avoid rate limits
-            if (postedCount > 0) {
-              await new Promise(resolve => setTimeout(resolve, 5000));
+            if (postedCount < eligibleCount) {
+              const delayMs = 5000;
+              console.log(`Waiting ${delayMs/1000}s before posting next prompt...`);
+              await new Promise(resolve => setTimeout(resolve, delayMs));
             }
           } else {
-            console.error(`Failed to post ${dir} to X`);
+            console.error(`❌ Failed to post ${dir} to X - no URL returned`);
+            throw new Error('No URL returned from postToX');
           }
         } catch (error) {
-          console.error(`Error posting ${dir} to X:`, error);
+          console.error(`❌ Error posting ${dir} to X: ${error.message}`);
+          // Re-throw the error so the workflow can retry
+          throw error;
         }
       }
     }
     
-    console.log(`Done! Posted ${postedCount} prompts to X.`);
+    if (eligibleCount === 0) {
+      console.log('No eligible prompts found to post to X.');
+      return 0;
+    }
+    
+    console.log(`✅ Done! Posted ${postedCount}/${eligibleCount} prompts to X.`);
+    
+    // If we didn't post all eligible prompts, throw an error to trigger retry
+    if (postedCount < eligibleCount) {
+      throw new Error(`Only posted ${postedCount}/${eligibleCount} prompts. Retry required.`);
+    }
+    
     return postedCount;
   } catch (error) {
-    console.error('Error posting prompts to X:', error);
-    return 0;
+    console.error(`❌ Error in postAllToX function: ${error.message}`);
+    // Re-throw to trigger retry in the workflow
+    throw error;
   }
 }
 
@@ -96,7 +116,7 @@ if (require.main === module) {
       setTimeout(() => process.exit(0), 1000);
     })
     .catch(error => {
-      console.error('Error:', error);
+      // We've already logged details in the function, just exit with error
       process.exit(1);
     });
 }

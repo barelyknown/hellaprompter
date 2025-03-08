@@ -100,10 +100,35 @@ jobs:
           TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
           TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
           TWITTER_REFRESH_TOKEN: ${{ secrets.TWITTER_REFRESH_TOKEN }}
+          MAX_RETRIES: "10"  # Retry up to 10 times
+          RETRY_DELAY: "30"  # 30 seconds between retries
         run: |
-          # Run a script to post all eligible prompts to X
+          # Run a script to post all eligible prompts to X with retries
           echo "Posting eligible prompts to X after site deployment..."
-          npm run post-all-to-x
+          
+          # Try posting to X with retries
+          RETRY_COUNT=0
+          MAX_RETRIES=${MAX_RETRIES:-10}  # Default to 10 retries if not set
+          RETRY_DELAY=${RETRY_DELAY:-30}  # Default to 30s if not set
+          
+          # Calculate total max wait time in minutes for human-readable output
+          TOTAL_MAX_MINUTES=$(( (MAX_RETRIES * RETRY_DELAY) / 60 ))
+          if [ $TOTAL_MAX_MINUTES -eq 0 ]; then
+            TOTAL_MAX_SECONDS=$(( MAX_RETRIES * RETRY_DELAY ))
+            echo "Will retry up to $MAX_RETRIES times with ${RETRY_DELAY}s between attempts (up to $TOTAL_MAX_SECONDS seconds total)"
+          else
+            echo "Will retry up to $MAX_RETRIES times with ${RETRY_DELAY}s between attempts (up to $TOTAL_MAX_MINUTES minutes total)"
+          fi
+          
+          until npm run post-all-to-x || [ $RETRY_COUNT -ge $MAX_RETRIES ]; do
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            echo "Posting to X failed. Retry $RETRY_COUNT of $MAX_RETRIES in ${RETRY_DELAY}s..."
+            sleep $RETRY_DELAY
+          done
+          
+          if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
+            echo "WARNING: Maximum retries reached. Some posts may not have completed successfully."
+          fi
           
           # If a new token was generated, read it and set as output
           if [ -f "twitter_tokens/new_refresh_token.txt" ]; then

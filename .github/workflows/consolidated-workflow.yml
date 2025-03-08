@@ -111,6 +111,22 @@ jobs:
             echo "token_updated=true" >> $GITHUB_OUTPUT
             echo "Token updated and outputs set for update-token job"
           fi
+      
+      - name: Commit xPostUrl updates to metadata.json 💾
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Check if there are any changes to commit
+          if [[ -n $(git status --porcelain prompts) ]]; then
+            # Add all changed metadata files
+            git add prompts/*/metadata.json
+            git commit -m "Update xPostUrl in metadata.json after posting to X" || true
+            git push
+            echo "Committed and pushed xPostUrl updates"
+          else
+            echo "No metadata changes to commit"
+          fi
 
   update-token:
     needs: build

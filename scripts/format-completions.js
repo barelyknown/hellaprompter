@@ -47,7 +47,11 @@ Make sure to:
 8. Do not add any extra content, commentary, or notes
 9. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
 10. Keep all links in standard markdown format: [link text](url)
-11. IMPORTANT: If the text contains image URLs, format them as proper markdown images ![Image description](image-url) and ensure each image is in its own paragraph with no other content
+11. IMPORTANT: When handling image URLs, follow these guidelines:
+   - Only URLs that are direct links to image files should be formatted as markdown images ![Image description](image-url)
+   - Direct image URLs typically do not contain "/wiki/" or similar path segments
+   - URLs containing "/wiki/" or pointing to Wikipedia/Wikimedia pages should NOT be treated as images, even if they end with .jpg, .jpeg, .png, etc.
+   - Each properly identified image should be in its own paragraph with no other content
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;

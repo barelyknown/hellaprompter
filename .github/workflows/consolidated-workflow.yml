@@ -45,6 +45,7 @@ jobs:
           IDEOGRAM_API_KEY: ${{ secrets.IDEOGRAM_API_KEY }}
           
       - name: Commit formatted completions and illustrations if any changes 💾
+        id: commit-changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -57,8 +58,10 @@ jobs:
             git add prompts/*/metadata.json || true
             git commit -m "Auto-format completions and generate illustrations" || true
             git push
+            echo "changes_committed=true" >> $GITHUB_OUTPUT
           else
             echo "No changes to commit"
+            echo "changes_committed=false" >> $GITHUB_OUTPUT
           fi
       
       - name: Fetch latest changes after commit 🔄
@@ -88,6 +91,7 @@ jobs:
           branch: gh-pages
           
       - name: Wait for GitHub Pages to deploy
+        if: steps.commit-changes.outputs.changes_committed == 'true'
         run: |
           echo "Waiting for GitHub Pages to deploy (60 seconds)..."
           sleep 60

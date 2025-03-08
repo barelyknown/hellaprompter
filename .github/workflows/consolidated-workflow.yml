@@ -117,12 +117,16 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Check if there are any changes to commit
-          if [[ -n $(git status --porcelain prompts) ]]; then
+          # First pull any changes that might have been made
+          git pull origin main
+          
+          # Check for changes in metadata.json files specifically
+          if [[ -n $(git status --porcelain prompts/*/metadata.json) ]]; then
             # Add all changed metadata files
             git add prompts/*/metadata.json
             git commit -m "Update xPostUrl in metadata.json after posting to X" || true
-            git push
+            # Push with upstream set explicitly
+            git push -u origin main
             echo "Committed and pushed xPostUrl updates"
           else
             echo "No metadata changes to commit"

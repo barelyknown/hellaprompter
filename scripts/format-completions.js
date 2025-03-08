@@ -46,7 +46,10 @@ Make sure to:
 7. If there are multiple identical links, keep the first occurrence and remove the rest
 8. Do not add any extra content, commentary, or notes
 9. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
-10. Keep all links in standard markdown format: [link text](url)
+10. Format links appropriately:
+   - Use standard markdown format: [link text](url)
+   - When a link serves as a reference or citation (not part of the sentence flow), enclose the entire link in parentheses: ([link text](url))
+   - Only leave markdown links without surrounding parentheses when they are meant to be read as part of the sentence flow
 11. IMPORTANT: When handling image URLs, follow these guidelines:
    - Only URLs that are direct links to image files should be formatted as markdown images ![Image description](image-url)
    - Direct image URLs typically do not contain "/wiki/" or similar path segments

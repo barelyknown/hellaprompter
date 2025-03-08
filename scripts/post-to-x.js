@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const os = require('os');
+const https = require('https');
 const { TwitterApi } = require('twitter-api-v2');
 require('dotenv').config();
 
@@ -32,10 +33,50 @@ async function postToX(promptSlug) {
       return metadata.xPostUrl;
     }
     
-    // Create the post text
-    const postText = createPostText(metadata, promptSlug);
+    // Create the post text and URL
+    const url = `https://www.hellaprompter.com/prompts/${promptSlug}/`;
+    const postText = createPostText(metadata, promptSlug, url);
     
-    console.log(`Posting to X: "${postText}"`);
+    console.log(`Preparing to post to X: "${postText}"`);
+    
+    // Check if the page is actually available before posting
+    console.log(`Verifying that the page is accessible: ${url}`);
+    try {
+      await verifyUrlIsAccessible(url);
+      console.log('Page is accessible! Proceeding with posting to X.');
+    } catch (error) {
+      console.error(`ERROR: Page is not accessible: ${error.message}`);
+      
+      const maxRetries = 5;
+      let pageAccessible = false;
+      
+      // Retry a few times before giving up
+      for (let i = 0; i < maxRetries; i++) {
+        console.log(`Retrying in 10 seconds... (${i+1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        
+        try {
+          await verifyUrlIsAccessible(url);
+          console.log('Page is now accessible! Proceeding with posting to X.');
+          pageAccessible = true;
+          break;
+        } catch (retryError) {
+          console.error(`Still not accessible: ${retryError.message}`);
+        }
+      }
+      
+      if (!pageAccessible) {
+        console.error(`Cannot post to X because the page is not accessible after ${maxRetries} retries.`);
+        console.error('This might indicate that the GitHub Pages deployment failed or is still in progress.');
+        console.error('Please check the deployment status and try again later.');
+        
+        if (process.env.IGNORE_URL_CHECK === 'true') {
+          console.log('IGNORE_URL_CHECK is set to true, proceeding with posting despite page not being accessible.');
+        } else {
+          throw new Error('Page not accessible');
+        }
+      }
+    }
     
     // Check Twitter API credentials
     if (!process.env.TWITTER_CLIENT_ID || 
@@ -143,8 +184,37 @@ async function postToX(promptSlug) {
   }
 }
 
+// Function to verify if a URL is accessible
+function verifyUrlIsAccessible(url) {
+  return new Promise((resolve, reject) => {
+    const request = https.get(url, { timeout: 10000 }, (response) => {
+      const { statusCode } = response;
+      
+      // Check for successful response (200 OK)
+      if (statusCode === 200) {
+        // Consume the response data to free up memory
+        response.resume();
+        resolve();
+      } else {
+        reject(new Error(`HTTP status code: ${statusCode}`));
+      }
+    });
+    
+    // Handle request errors (network issues, etc.)
+    request.on('error', (err) => {
+      reject(new Error(`Request failed: ${err.message}`));
+    });
+    
+    // Handle timeout
+    request.on('timeout', () => {
+      request.destroy();
+      reject(new Error('Request timed out after 10 seconds'));
+    });
+  });
+}
+
 // Create the text for the X post
-function createPostText(metadata, promptSlug) {
+function createPostText(metadata, promptSlug, url) {
   // Use social question if available, otherwise use social description or title
   let text = '';
   if (metadata.socialQuestion || metadata.title.endsWith('?')) {
@@ -155,9 +225,6 @@ function createPostText(metadata, promptSlug) {
   } else {
     text = `New article: ${metadata.title}`;
   }
-  
-  // Add the URL
-  const url = `https://www.hellaprompter.com/prompts/${promptSlug}/`;
   
   // Combine text and URL (ensure it's under X's 280 character limit)
   let postText = `${text} ${url}`;

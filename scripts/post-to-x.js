@@ -145,8 +145,16 @@ async function postToX(promptSlug) {
 
 // Create the text for the X post
 function createPostText(metadata, promptSlug) {
-  // Use social description if available, otherwise use title
-  const text = metadata.socialDescription || `New article: ${metadata.title}`;
+  // Use social question if available, otherwise use social description or title
+  let text = '';
+  if (metadata.socialQuestion || metadata.title.endsWith('?')) {
+    // If we have a question title (either in socialQuestion or the title itself is a question)
+    text = `New prompt: ${metadata.socialQuestion || metadata.title}`;
+  } else if (metadata.socialDescription) {
+    text = metadata.socialDescription;
+  } else {
+    text = `New article: ${metadata.title}`;
+  }
   
   // Add the URL
   const url = `https://www.hellaprompter.com/prompts/${promptSlug}/`;

@@ -47,24 +47,51 @@ Make sure to:
 8. Do not add any extra content, commentary, or notes
 9. Remove any special characters, Unicode symbols, or non-standard characters that might not render properly in a browser
 10. Keep all links in standard markdown format: [link text](url)
-
+11. IMPORTANT: If the text contains image URLs, format them as proper markdown images ![Image description](image-url) and ensure each image is in its own paragraph with no other content
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;
 
-    const completion = await openai.chat.completions.create({
-      model: "o1",
-      messages: [{ role: "user", content: prompt }]
-    });
+    // Also generate a short question title for social sharing
+    const socialTitlePrompt = `
+Based on the following article title and content, create a short, engaging question (5-10 words) that captures the essence of the article. This will be used as a social media post title.
+
+ARTICLE TITLE: "${title}"
+
+ARTICLE CONTENT (EXCERPT):
+${cleanedCompletionText.substring(0, 500)}${cleanedCompletionText.length > 500 ? '...' : ''}
+
+The question should:
+1. Be concise (5-10 words)
+2. Be conversational and engaging
+3. Capture the core comparison or concept from the article
+4. End with a question mark
+5. Entice readers to want to learn more
+
+Just return the question, nothing else.
+`;
+
+    // Run both API calls in parallel
+    const [completion, socialTitle] = await Promise.all([
+      openai.chat.completions.create({
+        model: "o1",
+        messages: [{ role: "user", content: prompt }]
+      }),
+      openai.chat.completions.create({
+        model: "o1-mini",
+        messages: [{ role: "user", content: socialTitlePrompt }]
+      })
+    ]);
 
     let formattedContent = completion.choices[0].message.content.trim();
+    const socialQuestion = socialTitle.choices[0].message.content.trim();
     
     // Remove markdown fences if they exist
     formattedContent = formattedContent.replace(/^```markdown\n/, '');
     formattedContent = formattedContent.replace(/\n```$/, '');
     formattedContent = formattedContent.replace(/^```\n/, '');
     
-    return formattedContent;
+    return { formattedContent, socialQuestion };
   } catch (error) {
     console.error('Error calling OpenAI API:', error);
     throw error;
@@ -113,10 +140,29 @@ async function processCompletions() {
         const metadata = await fs.readJson(metadataPath);
         
         // Format the completion using OpenAI
-        const formattedCompletion = await formatCompletion(completionText, markdownGuide, metadata.title);
+        const { formattedContent, socialQuestion } = await formatCompletion(completionText, markdownGuide, metadata.title);
+        
+        // Replace first heading with the question title
+        const originalTitle = metadata.title;
+        metadata.title = socialQuestion;
+        
+        // Check if content has a title heading, and either update or add it
+        let updatedContent;
+        if (formattedContent.match(/^# .+$/m)) {
+          // If there's a title heading, replace it
+          updatedContent = formattedContent.replace(/^# .+$/m, `# ${socialQuestion}`);
+        } else {
+          // If no title heading exists, add it at the beginning
+          updatedContent = `# ${socialQuestion}\n\n${formattedContent}`;
+        }
         
         // Write the formatted content to completion.md
-        await fs.writeFile(completionMdPath, formattedCompletion);
+        await fs.writeFile(completionMdPath, updatedContent);
+        
+        // Add original title and social question to metadata
+        metadata.originalTitle = originalTitle;
+        metadata.socialQuestion = socialQuestion;
+        await fs.writeJson(metadataPath, metadata, { spaces: 2 });
         
         console.log(`✓ Created completion.md for ${dir}`);
         processedCount++;

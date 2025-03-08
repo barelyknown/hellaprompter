@@ -48,6 +48,12 @@ Bulleted list:
 - Third point
 ```
 
+## Images
+Images should be in their own paragraph with no other content:
+```markdown
+![Image description](image-url.png)
+```
+
 ## Formulas
 Use italic formatting for formulas:
 ```markdown

@@ -55,6 +55,7 @@ Make sure to:
    - Direct image URLs typically do not contain "/wiki/" or similar path segments
    - URLs containing "/wiki/" or pointing to Wikipedia/Wikimedia pages should NOT be treated as images, even if they end with .jpg, .jpeg, .png, etc.
    - Each properly identified image should be in its own paragraph with no other content
+12. IMPORTANT: Always use Title Case for All Headings (capitalize all important words in headings)
 
 IMPORTANT: Return ONLY the reformatted markdown content. Do NOT include any markdown fences (like \`\`\`markdown) around your response.
 `;
@@ -74,7 +75,6 @@ The question should:
 3. Capture the core comparison or concept from the article
 4. End with a question mark
 5. Entice readers to want to learn more
-6. Use Title Case for All Words (capitalize all important words)
 
 Just return the question, nothing else.
 `;

@@ -206,11 +206,36 @@ h2, h3, h4 {
   height: 100%;
   object-fit: cover;
   transition: all 0.3s ease;
-  opacity: 0.97;
+  opacity: 0;
 }
 
 .article-image.loaded {
   opacity: 1;
+}
+
+/* Add a loading shimmer effect that only shows when image is loading */
+.article-image-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: loading-shimmer 1.5s infinite;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.article-image-container.image-loaded::before {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes loading-shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
 }
 
 .article-item-with-image:hover .article-image {

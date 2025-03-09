@@ -74,6 +74,7 @@ The question should:
 3. Capture the core comparison or concept from the article
 4. End with a question mark
 5. Entice readers to want to learn more
+6. Use Title Case for All Words (capitalize all important words)
 
 Just return the question, nothing else.
 `;

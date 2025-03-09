@@ -73,7 +73,7 @@ Content (excerpt): "${completion.substring(0, 500)}${completion.length > 500 ? '
   }
 }
 
-async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
+async function buildArticlePage(articleDir, slug, cssPath, jsPath, isProduction = false) {
   const completionPath = path.join(articleDir, 'completion.md');
   
   // Check if completion.md exists, if not, skip this directory
@@ -83,6 +83,14 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   }
   
   const mdContent = await fs.readFile(completionPath, 'utf8');
+  // Escape the markdown content for safe embedding in HTML
+  const escapedMdContent = mdContent
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+    
   const metadataPath = path.join(articleDir, 'metadata.json');
   const metadata = await fs.readJson(metadataPath);
   
@@ -140,8 +148,8 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
     `<!DOCTYPE html>
     <html lang="en">
     <head>
-      <!-- Umami Analytics -->
-      <script defer src="https://cloud.umami.is/script.js" data-website-id="e9b4bbf5-260a-4975-828c-fa3a9b9f34fa"></script>
+      ${isProduction ? `<!-- Umami Analytics -->
+      <script defer src="https://cloud.umami.is/script.js" data-website-id="e9b4bbf5-260a-4975-828c-fa3a9b9f34fa"></script>` : '<!-- Analytics disabled in development -->'}
       
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -179,6 +187,12 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
             <div class="prompt-header">
               <span class="prompt-label">Prompt</span>
               <span class="prompt-service">${metadata.service}</span>
+              <button id="copy-markdown-button" class="copy-button" data-markdown="${escapedMdContent}" title="Copy Markdown">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+              </button>
             </div>
             <div class="prompt-content">
               ${marked.parse(metadata.prompt)}
@@ -271,6 +285,10 @@ async function generateRssFeed(articles) {
 async function build() {
   console.log('Building site...');
   
+  // Determine if we're in production or development environment
+  const isProduction = process.env.GITHUB_ACTIONS === 'true' || process.env.NODE_ENV === 'production';
+  console.log(`Building in ${isProduction ? 'PRODUCTION' : 'DEVELOPMENT'} mode (analytics ${isProduction ? 'ENABLED' : 'DISABLED'})`);
+  
   // Clean dist directory
   await fs.emptyDir(DIST_DIR);
   
@@ -311,7 +329,7 @@ async function build() {
       const stats = await fs.stat(articleDir);
       
       if (stats.isDirectory()) {
-        const article = await buildArticlePage(articleDir, dir, cssPath, jsPath);
+        const article = await buildArticlePage(articleDir, dir, cssPath, jsPath, isProduction);
         // Only add the article if it's not null (has a completion.md file)
         if (article) {
           // Check if there are pull quotes in metadata
@@ -386,8 +404,8 @@ async function build() {
     `<!DOCTYPE html>
     <html lang="en">
     <head>
-      <!-- Umami Analytics -->
-      <script defer src="https://cloud.umami.is/script.js" data-website-id="e9b4bbf5-260a-4975-828c-fa3a9b9f34fa"></script>
+      ${isProduction ? `<!-- Umami Analytics -->
+      <script defer src="https://cloud.umami.is/script.js" data-website-id="e9b4bbf5-260a-4975-828c-fa3a9b9f34fa"></script>` : '<!-- Analytics disabled in development -->'}
       
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">

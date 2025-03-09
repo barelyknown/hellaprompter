@@ -1,6 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
   console.log('Hellaprompter initialized');
   
+  // Setup copy markdown functionality
+  const copyMarkdownButton = document.getElementById('copy-markdown-button');
+  
+  if (copyMarkdownButton) {
+    copyMarkdownButton.addEventListener('click', async () => {
+      try {
+        // Get the markdown content directly from the data attribute
+        const markdownContent = copyMarkdownButton.getAttribute('data-markdown');
+        
+        if (!markdownContent) {
+          throw new Error('Markdown content not found');
+        }
+        
+        // Copy to clipboard
+        await navigator.clipboard.writeText(markdownContent);
+        
+        // Visual feedback
+        const originalContent = copyMarkdownButton.innerHTML;
+        copyMarkdownButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 6L9 17l-5-5"></path>
+          </svg>
+        `;
+        copyMarkdownButton.classList.add('copied');
+        
+        // Reset button after 2 seconds
+        setTimeout(() => {
+          copyMarkdownButton.innerHTML = originalContent;
+          copyMarkdownButton.classList.remove('copied');
+        }, 2000);
+      } catch (error) {
+        console.error('Failed to copy markdown:', error);
+        const originalContent = copyMarkdownButton.innerHTML;
+        copyMarkdownButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        `;
+        copyMarkdownButton.classList.add('copied');
+        
+        // Reset button after 2 seconds
+        setTimeout(() => {
+          copyMarkdownButton.innerHTML = originalContent;
+          copyMarkdownButton.classList.remove('copied');
+        }, 2000);
+      }
+    });
+  }
+  
   // Setup search functionality
   const searchInput = document.getElementById('search-input');
   const articlesList = document.getElementById('articles-list');

@@ -1,8 +1,20 @@
 {
   "prompt": "Who are the 20 most important and influential thinkers of all time? And, for each of them, how would you rank their character and general acceptance by the public during their time?",
-  "title": "20 Most Important Thinkers of All Time and Their Character and Acceptance",
+  "title": "Who Are the 20 Most Influential Thinkers?",
   "date": "2025-03-09",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "20 Most Important Thinkers of All Time and Their Character and Acceptance",
+  "socialQuestion": "Who Are the 20 Most Influential Thinkers?",
+  "pullQuotes": [
+    "“Aristotle was accused of impiety and fled Athens ‘lest the Athenians sin twice against philosophy’ (referring to Socrates’ fate).”",
+    "“Confucius was seen by followers as a wise, humble teacher, but he was not widely celebrated by rulers in his lifetime.”",
+    "“His insistence on questioning every assumption was a superior approach to truth-seeking that advanced philosophy and logic.”",
+    "“In 1633 he was tried by the Inquisition and forced to recant his ‘heretical’ view that Earth moves.”",
+    "“Marx’s writings were largely rejected or ignored by mainstream institutions in the 19th century.”"
+  ],
+  "illustrationPath": "illustration-2-1741557950985.png",
+  "sceneDescription": "A tall marble statue of Aristotle dominates a quiet museum hall, flanked by smaller busts of notable philosophers fading into the background. A few visitors pause thoughtfully, hands on chins, while others stroll by without a glance. The statue’s exaggerated scale gently mocks the idea of “most influential,” suggesting that greatness—like statues—sometimes overshadows other deserving figures behind it.",
+  "illustrationExplanation": "2. This illustration best captures the essence of the content, showcasing Aristotle's statue prominently while maintaining the presence of other philosophers fading into the background. The visitors' engagement and thoughtful poses add humorous subtlety, aligning with the New Yorker cartoon style. The composition is clear, with artistic quality and sophistication."
 }

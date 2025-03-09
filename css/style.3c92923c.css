@@ -422,7 +422,6 @@ h2, h3, h4 {
 
 .prompt-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0.7rem 1.2rem;
   background-color: #f9f9f9;
@@ -440,6 +439,37 @@ h2, h3, h4 {
 .prompt-service {
   font-size: 0.85rem;
   color: #777;
+  margin-left: auto;
+  margin-right: 0.5rem;
+}
+
+.copy-button {
+  color: #777;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.copy-button:hover {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.copy-button:active {
+  background-color: #e0e0e0;
+}
+
+.copy-button.copied {
+  color: #1b5e20;
+  background-color: #e8f5e9;
 }
 
 .prompt-content {

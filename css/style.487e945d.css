@@ -129,7 +129,6 @@ h2, h3, h4 {
 #search-input {
   width: 100%;
   padding: 0.8rem 1rem;
-  padding-left: 2.2rem;
   font-size: 1rem;
   font-family: Georgia, Times, serif;
   border: 1px solid #d8d8d8;
@@ -159,26 +158,14 @@ h2, h3, h4 {
 }
 
 /* Add subtle search icon */
-#search-container::before {
-  content: '🔍';
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.4;
-  font-size: 14px;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
+/* Removed magnifying glass icon */
 
 @media (min-width: 500px) {
-  #search-container::before {
-    left: 25px;
-  }
+  /* Removed icon positioning */
   
-  /* Center the placeholder text properly with the icon */
+  /* Keep text centered properly */
   #search-input {
-    text-indent: 1rem;
+    /* Removed text-indent */
   }
 }
 

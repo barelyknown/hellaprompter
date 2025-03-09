@@ -47,13 +47,16 @@ async function postToX(promptSlug) {
     } catch (error) {
       console.error(`ERROR: Page is not accessible: ${error.message}`);
       
-      const maxRetries = 5;
+      const maxRetries = 10;
+      const delaySeconds = 30;
       let pageAccessible = false;
+      
+      console.log(`Will retry up to ${maxRetries} times with ${delaySeconds}s between attempts (up to ${maxRetries * delaySeconds / 60} minutes total)`);
       
       // Retry a few times before giving up
       for (let i = 0; i < maxRetries; i++) {
-        console.log(`Retrying in 10 seconds... (${i+1}/${maxRetries})`);
-        await new Promise(resolve => setTimeout(resolve, 10000));
+        console.log(`Retrying in ${delaySeconds} seconds... (${i+1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, delaySeconds * 1000));
         
         try {
           await verifyUrlIsAccessible(url);
@@ -66,7 +69,7 @@ async function postToX(promptSlug) {
       }
       
       if (!pageAccessible) {
-        console.error(`Cannot post to X because the page is not accessible after ${maxRetries} retries.`);
+        console.error(`Cannot post to X because the page is not accessible after ${maxRetries} attempts (${(maxRetries * delaySeconds / 60).toFixed(1)} minutes).`);
         console.error('This might indicate that the GitHub Pages deployment failed or is still in progress.');
         console.error('Please check the deployment status and try again later.');
         

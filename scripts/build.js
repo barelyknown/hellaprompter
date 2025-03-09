@@ -329,10 +329,9 @@ async function build() {
         const hasImage = article.hasIllustration && article.illustrationPath;
         const imageHtml = hasImage ? `
           <div class="article-image-container">
-            <img src="prompts/${article.slug}/images/${article.illustrationPath}" 
+            <img data-src="prompts/${article.slug}/images/${article.illustrationPath}" 
                  alt="${article.title}" 
-                 class="article-image" 
-                 loading="lazy">
+                 class="article-image">
           </div>` : '';
         
         return `

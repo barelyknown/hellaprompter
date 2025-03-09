@@ -109,6 +109,9 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
   
   // Check if illustration exists and copy it to the dist directory
   let illustrationHtml = '';
+  let hasIllustration = false;
+  let illustrationPath = null;
+  
   if (metadata.illustration === true && metadata.illustrationPath) {
     const illustrationSourcePath = path.join(articleDir, metadata.illustrationPath);
     if (await fs.pathExists(illustrationSourcePath)) {
@@ -118,6 +121,10 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       // Copy the illustration
       const illustrationDestPath = path.join(DIST_DIR, 'prompts', slug, 'images', metadata.illustrationPath);
       await fs.copy(illustrationSourcePath, illustrationDestPath);
+      
+      // Store illustration path for index page
+      illustrationPath = metadata.illustrationPath;
+      hasIllustration = true;
       
       // Add the illustration HTML with loading attribute
       illustrationHtml = `
@@ -144,7 +151,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta property="og:url" content="https://www.hellaprompter.com/prompts/${slug}/">
       <meta property="og:title" content="${metadata.title}">
       <meta property="og:description" content="${metadata.socialDescription || metadata.prompt.substring(0, 150)}${!metadata.socialDescription && metadata.prompt.length > 150 ? '...' : ''}">
-      ${metadata.illustration === true && metadata.illustrationPath ? `<meta property="og:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
+      ${hasIllustration ? `<meta property="og:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${illustrationPath}">` : ''}
       <meta property="article:published_time" content="${metadata.date}">
       
       <!-- Twitter -->
@@ -152,7 +159,7 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
       <meta name="twitter:url" content="https://www.hellaprompter.com/prompts/${slug}/">
       <meta name="twitter:title" content="${metadata.title}">
       <meta name="twitter:description" content="${metadata.socialDescription || metadata.prompt.substring(0, 150)}${!metadata.socialDescription && metadata.prompt.length > 150 ? '...' : ''}">
-      ${metadata.illustration === true && metadata.illustrationPath ? `<meta name="twitter:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${metadata.illustrationPath}">` : ''}
+      ${hasIllustration ? `<meta name="twitter:image" content="https://www.hellaprompter.com/prompts/${slug}/images/${illustrationPath}">` : ''}
       <meta name="twitter:creator" content="@barelyknown">
       
       <link rel="stylesheet" href="../../${cssPath}">
@@ -197,7 +204,9 @@ async function buildArticlePage(articleDir, slug, cssPath, jsPath) {
     slug,
     title: metadata.title,
     date: metadata.date,
-    service: metadata.service
+    service: metadata.service,
+    hasIllustration,
+    illustrationPath
   };
 }
 
@@ -316,16 +325,31 @@ async function build() {
   
   // Create articles list HTML
   const articlesListHtml = articles.length > 0
-    ? articles.map(article => `
-      <div class="article-item">
-        <h2 class="article-title">
-          <a href="prompts/${article.slug}/index.html">${article.title}</a>
-        </h2>
-        <div class="article-meta">
-          <span class="article-date">${article.date}</span>
+    ? articles.map(article => {
+        const hasImage = article.hasIllustration && article.illustrationPath;
+        const imageHtml = hasImage ? `
+          <div class="article-image-container">
+            <img src="prompts/${article.slug}/images/${article.illustrationPath}" 
+                 alt="${article.title}" 
+                 class="article-image" 
+                 loading="lazy">
+          </div>` : '';
+        
+        return `
+        <div class="article-item ${hasImage ? 'article-item-with-image' : ''}">
+          <a href="prompts/${article.slug}/index.html" class="article-link">${article.title}</a>
+          ${imageHtml}
+          <div class="article-content">
+            <h2 class="article-title">
+              <a href="prompts/${article.slug}/index.html">${article.title}</a>
+            </h2>
+            <div class="article-meta">
+              <span class="article-date">${article.date}</span>
+            </div>
+          </div>
         </div>
-      </div>
-    `).join('')
+      `;
+      }).join('')
     : '<p>No articles yet. Add some to the prompts directory.</p>';
   
   // Create index file

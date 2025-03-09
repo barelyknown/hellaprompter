@@ -82,34 +82,66 @@ h2, h3, h4 {
 }
 
 #search-container {
-  margin: 0 0 2.5rem;
+  margin: 0 0 2.8rem;
   padding-bottom: 0;
+  position: relative;
+  width: 100%;
 }
 
 #search-input {
   width: 100%;
-  padding: 0.7rem;
+  padding: 0.8rem 1rem;
+  padding-left: 2.2rem;
   font-size: 1rem;
   font-family: Georgia, Times, serif;
-  border: 1px solid #d0d0d0;
+  border: 1px solid #d8d8d8;
+  border-radius: 4px;
   background-color: #fafafa;
-  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
   text-align: center;
+  transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
 #search-input:focus {
   outline: none;
   border-color: #999;
-  border-width: 1px;
   background-color: #fff;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.03);
 }
 
 #search-input::placeholder {
   text-align: center;
+  color: #888;
+  font-style: italic;
 }
 
 #search-input:focus::placeholder {
   color: transparent;
+}
+
+/* Add subtle search icon */
+#search-container::before {
+  content: '🔍';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.4;
+  font-size: 14px;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+@media (min-width: 500px) {
+  #search-container::before {
+    left: 25px;
+  }
+  
+  /* Center the placeholder text properly with the icon */
+  #search-input {
+    text-indent: 1rem;
+  }
 }
 
 #articles-list {
@@ -118,39 +150,145 @@ h2, h3, h4 {
 }
 
 .article-item {
-  margin-bottom: 1.8rem;
+  margin-bottom: 2.5rem;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 6px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.article-item:not(.article-item-with-image) {
+  border: 1px solid #eaeaea;
+  padding: 1.2rem;
+  background-color: #fcfcfc;
+}
+
+.article-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* Make the entire article item clickable */
+.article-item a.article-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  text-indent: -9999px;
+  overflow: hidden;
+}
+
+.article-item-with-image {
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  padding-bottom: 1rem;
+  background-color: white;
+}
+
+.article-image-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0.8rem;
+  overflow: hidden;
+  border-radius: 5px 5px 0 0;
+  aspect-ratio: 16/9;
+  background-color: #f9f9f9;
+}
+
+.article-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: all 0.3s ease;
+  opacity: 0.97;
+}
+
+.article-image.loaded {
+  opacity: 1;
+}
+
+.article-item-with-image:hover .article-image {
+  transform: scale(1.04);
+  opacity: 1;
+}
+
+/* Add overlay gradient to images to ensure text readability */
+.article-image-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.15));
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.article-item:hover .article-image-container::after {
+  opacity: 0.7;
+}
+
+.article-content {
+  padding: 0 1.2rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  justify-content: space-between;
 }
 
 .article-title {
   font-size: 1.3rem;
-  margin: 0 0 0.3rem 0;
+  margin: 0 0 0.4rem 0;
   font-weight: normal;
   line-height: 1.3;
+  font-family: "Palatino Linotype", Palatino, Georgia, serif;
+  color: #222;
 }
 
 .article-title a {
-  color: #333;
+  color: #222;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
   border-bottom: none;
+  display: inline-block;
+  position: relative;
+  z-index: 2; /* Make title clickable on top of the full card link */
 }
 
 .article-title a:hover {
   color: #000;
+}
+
+.article-item:hover .article-title a {
   text-decoration: underline;
+}
+
+.article-item-with-image .article-title {
+  margin-top: 0.2rem;
 }
 
 .article-meta {
   display: flex;
   align-items: center;
   margin-bottom: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.8rem;
+  position: relative;
+  z-index: 2; /* Make date visible on top of the full card link */
 }
 
 .article-date {
   color: #666;
   font-size: 0.85rem;
   font-style: italic;
+  letter-spacing: 0.2px;
 }
 
 /* Article page styles */
@@ -380,6 +518,51 @@ h2, h3, h4 {
   color: #555;
 }
 
+/* Apply animation to article items */
+.article-item {
+  animation: fadeIn 0.5s ease forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+/* Stagger animation for articles */
+.article-item:nth-child(1) { animation-delay: 0.05s; }
+.article-item:nth-child(2) { animation-delay: 0.1s; }
+.article-item:nth-child(3) { animation-delay: 0.15s; }
+.article-item:nth-child(4) { animation-delay: 0.2s; }
+.article-item:nth-child(5) { animation-delay: 0.25s; }
+.article-item:nth-child(6) { animation-delay: 0.3s; }
+.article-item:nth-child(7) { animation-delay: 0.35s; }
+.article-item:nth-child(8) { animation-delay: 0.4s; }
+.article-item:nth-child(9) { animation-delay: 0.45s; }
+.article-item:nth-child(10) { animation-delay: 0.5s; }
+.article-item:nth-child(n+11) { animation-delay: 0.55s; }
+
+@media (min-width: 601px) {
+  /* Create a grid layout for articles on larger screens */
+  #articles-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 2rem;
+  }
+  
+  .article-item {
+    margin-bottom: 0;
+  }
+}
+
+/* Removed the 3-column layout */
+
 @media (max-width: 600px) {
   body {
     padding: 1rem;
@@ -397,5 +580,19 @@ h2, h3, h4 {
   
   .article-content {
     font-size: 1rem;
+  }
+  
+  .article-item {
+    margin-bottom: 1.8rem;
+  }
+  
+  .article-title {
+    font-size: 1.2rem;
+  }
+  
+  /* Subtle divider between articles on mobile */
+  .article-item:not(:last-child) {
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 1.8rem;
   }
 }

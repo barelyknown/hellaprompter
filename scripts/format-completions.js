@@ -78,7 +78,10 @@ The question should:
 Just return the question, nothing else.
 `;
 
-    // Run both API calls in parallel
+    // Import pull quotes utility
+    const { generatePullQuotes } = require('./utils/pull-quotes');
+
+    // Run all API calls in parallel
     const [completion, socialTitle] = await Promise.all([
       openai.chat.completions.create({
         model: "o1",
@@ -93,12 +96,15 @@ Just return the question, nothing else.
     let formattedContent = completion.choices[0].message.content.trim();
     const socialQuestion = socialTitle.choices[0].message.content.trim();
     
+    // Generate pull quotes using the shared utility
+    const quotes = await generatePullQuotes(cleanedCompletionText, title);
+    
     // Remove markdown fences if they exist
     formattedContent = formattedContent.replace(/^```markdown\n/, '');
     formattedContent = formattedContent.replace(/\n```$/, '');
     formattedContent = formattedContent.replace(/^```\n/, '');
     
-    return { formattedContent, socialQuestion };
+    return { formattedContent, socialQuestion, pullQuotes: quotes };
   } catch (error) {
     console.error('Error calling OpenAI API:', error);
     throw error;
@@ -147,7 +153,7 @@ async function processCompletions() {
         const metadata = await fs.readJson(metadataPath);
         
         // Format the completion using OpenAI
-        const { formattedContent, socialQuestion } = await formatCompletion(completionText, markdownGuide, metadata.title);
+        const { formattedContent, socialQuestion, pullQuotes } = await formatCompletion(completionText, markdownGuide, metadata.title);
         
         // Replace first heading with the question title
         const originalTitle = metadata.title;
@@ -166,9 +172,14 @@ async function processCompletions() {
         // Write the formatted content to completion.md
         await fs.writeFile(completionMdPath, updatedContent);
         
-        // Add original title and social question to metadata
+        // Add original title, social question, and pull quotes to metadata
         metadata.originalTitle = originalTitle;
         metadata.socialQuestion = socialQuestion;
+        metadata.pullQuotes = pullQuotes;
+        
+        console.log('Extracted pull quotes:');
+        pullQuotes.forEach((quote, i) => console.log(`  ${i+1}. ${quote}`));
+        
         await fs.writeJson(metadataPath, metadata, { spaces: 2 });
         
         console.log(`✓ Created completion.md for ${dir}`);

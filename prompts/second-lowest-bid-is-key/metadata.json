@@ -1,14 +1,21 @@
 {
   "prompt": "Why is the most important number to guess in a “low bid” bidding situation (like most government contracts) the second lowest bid (the lowest losing bid)? How is that the most helpful number to guess for maximizing profitability?",
-  "title": "Think the lowest bid always wins?",
+  "title": "Is the lowest bid always the winner?",
   "date": "2025-03-08",
   "service": "ChatGPT Deep Research",
   "postToX": true,
   "illustration": true,
-  "originalTitle": "Why Estimating the Second-Lowest Bid is Key in Low-Bid Auctions",
-  "socialQuestion": "Think the lowest bid always wins?",
+  "originalTitle": "Think the lowest bid always wins?",
+  "socialQuestion": "Is the lowest bid always the winner?",
   "illustrationPath": "illustration-2-1741470568789.png",
   "sceneDescription": "A row of solemn businesspeople in dark suits stands before a government official seated at a long desk. Each person clutches a sealed envelope. One figure at the front, wearing a restrained grin, receives a handshake and a contract from the official. Another figure, envelope in hand, stands just behind, body language revealing a deflated realization. The official uses a tiny ruler to compare the edges of the two envelopes. The scene highlights the razor-thin margin between winning and losing in the bidding process.",
   "illustrationExplanation": "2. This illustration captures the essence of the article with the official using a ruler to highlight the fine margins in the bidding process. The expressions of the businesspeople reflect the competitive nature of the scene, aligning well with New Yorker humor and style.",
-  "xPostUrl": "https://x.com/barelyknown/status/1898491438977208697"
+  "xPostUrl": "https://x.com/barelyknown/status/1898491438977208697",
+  "pullQuotes": [
+    "\"In a low-bid auction, you don’t need to dramatically underbid everyone else; you just need to be a hair lower.\"",
+    "\"If you bid much lower than necessary, you’ll still win, but you sacrifice profit that you could have kept.\"",
+    "\"The difference between your winning bid and the second-lowest bid is often called “money left on the table.”\"",
+    "\"That $90,000 is profit left on the table by bidding $1,000,000 when they only needed to bid slightly under $1,100,000.\"",
+    "\"If you could magically know your closest competitor’s price in advance, you’d set your bid a hair below it and win with maximum profit.\""
+  ]
 }

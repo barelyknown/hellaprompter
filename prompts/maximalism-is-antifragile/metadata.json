@@ -8,5 +8,12 @@
   "illustration": true,
   "illustrationPath": "illustration-1-1740940013785.png",
   "sceneDescription": "A sparse living room dominates the frame with stark white walls and a single, precariously thin chair teetering in the center. Tucked off to one side stands an overloaded bookshelf, stuffed with mismatched objects and stacked at irregular angles, yet looking surprisingly sturdy and secure. The lone occupant of the room stands between the chair and the overflowing shelf, hands folded hesitantly, contrasting the fragility of the ultraminimalist centerpiece with the robust chaos behind.",
-  "illustrationExplanation": "1\n\nThis illustration best captures the contrast between minimalism and maximalism, with the teetering chair representing the fragility of minimalism and the robust, overflowing bookshelf symbolizing antifragility. The humor and style are characteristic of The New Yorker, with clear visual composition and artistic quality aligning well with the article's theme."
+  "illustrationExplanation": "1\n\nThis illustration best captures the contrast between minimalism and maximalism, with the teetering chair representing the fragility of minimalism and the robust, overflowing bookshelf symbolizing antifragility. The humor and style are characteristic of The New Yorker, with clear visual composition and artistic quality aligning well with the article's theme.",
+  "pullQuotes": [
+    "“redundancy is ambiguous because it seems like a waste if nothing unusual happens. Except that something unusual happens — usually.”",
+    "“By eliminating ‘randomness, redundancy, and optionality,’ an overly minimalist design may become brittle, suffering big losses when reality deviates from our neat plans.”",
+    "“Ornamentation and complexity were rejected as unnecessary or even decadent distractions from pure function.”",
+    "“The lesson is that designing to the bare minimum (for expected loads) is dangerous; good design includes buffers for the unexpected.”",
+    "“A minimalist, ‘elegant’ model … turned out to be built on oversimplified assumptions – and when those failed, the damage was enormous.”"
+  ]
 }

@@ -311,6 +311,17 @@ async function build() {
         const article = await buildArticlePage(articleDir, dir, cssPath, jsPath);
         // Only add the article if it's not null (has a completion.md file)
         if (article) {
+          // Check if there are pull quotes in metadata
+          const metadataPath = path.join(articleDir, 'metadata.json');
+          if (await fs.pathExists(metadataPath)) {
+            const metadata = await fs.readJson(metadataPath);
+            if (metadata.pullQuotes && metadata.pullQuotes.length > 0) {
+              // Add a random pull quote to the article object
+              const randomIndex = Math.floor(Math.random() * metadata.pullQuotes.length);
+              article.pullQuote = metadata.pullQuotes[randomIndex];
+            }
+          }
+          
           articles.push(article);
           // Note: X posting is now done separately after deployment in post-all-to-x.js
         }
@@ -334,6 +345,20 @@ async function build() {
                  class="article-image">
           </div>` : '';
         
+        // Add pull quote if available - clean up quotes and ellipses
+        const cleanQuote = article.pullQuote 
+          ? article.pullQuote
+              .replace(/^[""]|[""]$/g, '') // Remove opening/closing quotes
+              .replace(/\.\.\.$/g, '') // Remove trailing ellipses if present
+              .trim()
+          : '';
+          
+        // Always include the pull-quote div for consistent layout, but only fill it if we have a quote
+        const pullQuoteHtml = `
+          <div class="article-pull-quote">
+            ${cleanQuote ? `<blockquote>${cleanQuote}</blockquote>` : ''}
+          </div>`;
+        
         return `
         <div class="article-item ${hasImage ? 'article-item-with-image' : ''}">
           <a href="prompts/${article.slug}/index.html" class="article-link">${article.title}</a>
@@ -342,6 +367,7 @@ async function build() {
             <h2 class="article-title">
               <a href="prompts/${article.slug}/index.html">${article.title}</a>
             </h2>
+            ${pullQuoteHtml}
             <div class="article-meta">
               <span class="article-date">${article.date}</span>
             </div>
@@ -386,6 +412,12 @@ async function build() {
         <p class="author-link"><a href="https://x.com/barelyknown" target="_blank">@barelyknown</a></p>
       </header>
       <main>
+        <section class="how-it-works">
+          <h2>What is This?</h2>
+          <p>This site is a collection of articles generated from prompts. Every article begins with a question that explores an idea or concept that is of interest to me. An AI responds with a detailed answer, which is presented alongside an automatically generated and selected illustration. Even the pull quotes are automatically selected.</p>
+          <p>What makes this site special is that the <em>questions</em> are the focus, not just the answers. The prompts cover a variety of topics ranging from philosophy and technology to sports and design.</p>
+          <p><small>This entire site was designed and implemented using <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview">Claude Code</a>—Anthropic's AI coding assistant—and is <a href="https://github.com/barelyknown/hellaprompter">available, built and deployed on GitHub</a>.</small></p>
+        </section>
         <div id="search-container">
           <input type="text" id="search-input" placeholder="search">
         </div>

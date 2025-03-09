@@ -8,5 +8,12 @@
   "illustration": true,
   "illustrationPath": "illustration-3-1741354872731.png",
   "sceneDescription": "A lone lift operator stands at the control booth near the top of a snowy peak, examining a large lever marked with a progression of simple icons ranging from a tiny snail to a soaring rocket. Behind the operator, an impatient row of bundled-up skiers and snowboarders waits, some tapping boots anxiously. Far below, another group wobbles aboard the slow, swinging chairs. Overhead, the haul rope stretches across the frosty expanse. The operator’s posture suggests a delicate balancing act, ready to nudge the lever—yet holding fast to caution in the thin mountain air.",
-  "illustrationExplanation": "3\n\nThis illustration best captures the delicate balance and decision-making involved in setting chairlift speeds. The progression of icons from snail to rocket on the lever effectively conveys the concept of speed variation, while the operator’s actions reflect the careful consideration described in the article. The style is in line with New Yorker cartoons, and the humor is subtle yet effective."
+  "illustrationExplanation": "3\n\nThis illustration best captures the delicate balance and decision-making involved in setting chairlift speeds. The progression of icons from snail to rocket on the lever effectively conveys the concept of speed variation, while the operator’s actions reflect the careful consideration described in the article. The style is in line with New Yorker cartoons, and the humor is subtle yet effective.",
+  "pullQuotes": [
+    "\"Modern chairlift technologies and optimization strategies help resorts achieve high capacity **without** compromising safety or comfort.\"",
+    "\"Operators must obey these limits and ensure that emergency braking distances and system response times are within safe bounds at the chosen speed.\"",
+    "\"In fact, experiments have shown that trying to board a chair moving at ~14 mph (6 m/s) would be 'very painful and embarrassing' for passengers.\"",
+    "\"Many resorts deliberately run their high-speed lifts slightly below maximum speed most of the time to reduce wear, improve reliability, and mitigate passenger anxiety.\"",
+    "\"On bad weather days, lifts often run below their optimal speed or not at all, regardless of other demands.\""
+  ]
 }

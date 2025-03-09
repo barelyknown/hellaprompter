@@ -81,6 +81,44 @@ h2, h3, h4 {
   color: #333;
 }
 
+.how-it-works {
+  background-color: #f9f9f9;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+}
+
+.how-it-works h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.how-it-works p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.how-it-works p:last-child {
+  margin-bottom: 0;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.how-it-works a {
+  color: #444;
+  text-decoration: none;
+  border-bottom: 1px dotted #ccc;
+  transition: all 0.2s ease;
+}
+
+.how-it-works a:hover {
+  color: #000;
+  border-bottom: 1px solid #000;
+}
+
 #search-container {
   margin: 0 0 2.8rem;
   padding-bottom: 0;
@@ -187,18 +225,21 @@ h2, h3, h4 {
 .article-item-with-image {
   border: 1px solid #e0e0e0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  padding-bottom: 1rem;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .article-image-container {
   position: relative;
   width: 100%;
-  margin-bottom: 0.8rem;
   overflow: hidden;
   border-radius: 5px 5px 0 0;
   aspect-ratio: 16/9;
   background-color: #f9f9f9;
+  margin: 0;
+  line-height: 0; /* Remove any line height spacing */
 }
 
 .article-image {
@@ -261,20 +302,21 @@ h2, h3, h4 {
 }
 
 .article-content {
-  padding: 0 1.2rem;
+  padding: 0 1.2rem 0;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  justify-content: space-between;
+  flex: 1;
+  position: relative;
 }
 
 .article-title {
   font-size: 1.3rem;
-  margin: 0 0 0.4rem 0;
+  margin: 0;
   font-weight: normal;
   line-height: 1.3;
   font-family: "Palatino Linotype", Palatino, Georgia, serif;
   color: #222;
+  border-bottom: none;
 }
 
 .article-title a {
@@ -282,6 +324,7 @@ h2, h3, h4 {
   text-decoration: none;
   transition: all 0.2s ease;
   border-bottom: none;
+  border: none;
   display: inline-block;
   position: relative;
   z-index: 2; /* Make title clickable on top of the full card link */
@@ -296,17 +339,44 @@ h2, h3, h4 {
 }
 
 .article-item-with-image .article-title {
-  margin-top: 0.2rem;
+  margin-top: 0.1rem;
+  margin-bottom: 0;
+}
+
+.article-pull-quote {
+  margin: 0;
+  position: relative;
+  z-index: 2; /* Make quote visible on top of the full card link */
+  padding: 0 0.3rem;
+  display: flex;
+  align-items: flex-end; /* Align to the bottom */
+  max-width: 100%;
+  overflow: hidden;
+  min-height: 2.5rem; /* Reduced minimum height */
+}
+
+.article-pull-quote blockquote {
+  margin: 0;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  color: #333;
+  font-style: italic;
+  position: relative;
+  background-color: #f8f8f8;
+  border-radius: 3px;
+  width: 100%;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.03);
 }
 
 .article-meta {
   display: flex;
   align-items: center;
-  margin-bottom: 0.5rem;
-  margin-top: auto;
-  padding-top: 0.8rem;
+  margin-top: 0;
+  padding: 0.3rem 0 0.5rem; /* Reduced padding */
   position: relative;
   z-index: 2; /* Make date visible on top of the full card link */
+  border-top: none;
 }
 
 .article-date {
@@ -523,6 +593,7 @@ h2, h3, h4 {
   margin-bottom: 0.5rem;
 }
 
+/* Default style for links in article content */
 .article-content a {
   color: #444;
   text-decoration: none;
@@ -530,9 +601,21 @@ h2, h3, h4 {
   transition: border-bottom 0.2s;
 }
 
+/* Override for title links - more specific selector to take precedence */
+.article-content .article-title a {
+  border-bottom: none;
+  color: #222;
+}
+
+/* General hover style for links in article content */
 .article-content a:hover {
   color: #000;
   border-bottom: 1px solid #000;
+}
+
+/* Override hover style for title links */
+.article-content .article-title a:hover {
+  border-bottom: none;
 }
 
 .article-content blockquote {
@@ -579,10 +662,38 @@ h2, h3, h4 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 2rem;
+    grid-auto-rows: 1fr; /* Make rows the same height */
   }
   
   .article-item {
     margin-bottom: 0;
+    display: grid;
+    grid-template-rows: auto 1fr auto; /* Image, content, footer */
+    height: auto;
+  }
+  
+  .article-item-with-image .article-image-container {
+    grid-row: 1;
+  }
+  
+  .article-item-with-image .article-content {
+    grid-row: 2;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0; /* Remove bottom padding */
+  }
+  
+  .article-item-with-image .article-title {
+    flex-shrink: 0; /* Don't shrink the title */
+  }
+  
+  .article-item-with-image .article-pull-quote {
+    margin-top: auto; /* This pushes the pull quote to the bottom */
+    flex-shrink: 0; /* Don't shrink the pull quote */
+  }
+  
+  .article-item-with-image .article-meta {
+    flex-shrink: 0; /* Don't shrink the date */
   }
 }
 

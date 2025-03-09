@@ -9,5 +9,12 @@
   "illustrationExplanation": "3\n\nThis illustration best captures the essence of the article by clearly depicting the seamless connection between the DNA strands and the circuit board lines, symbolizing the parallel between genetic code and AI architecture. Its minimalist style is characteristic of New Yorker design, and it maintains visual clarity and sophistication in humor, subtly highlighting the convergence of biology and technology.",
   "postToX": true,
   "socialDescription": "Can LLM model weights truly be compared to the DNA of AI in encoding knowledge?",
-  "xPostUrl": "https://x.com/barelyknown/status/1896257818954498133"
+  "xPostUrl": "https://x.com/barelyknown/status/1896257818954498133",
+  "pullQuotes": [
+    "\"Evolution can be viewed as a blind but powerful search algorithm exploring the space of possible genomes.\"",
+    "\"The reason DNA and LLM weights contain such rich, structured information is that they are the product of iterative optimization processes...\"",
+    "\"the genome is more like a recipe than a blueprint—it encodes a set of rules ... that result in the emergence of the final form.\"",
+    "\"Indeed, researchers describe generative model training as a form of data compression: ... the model's weights are 'the compressed version of the training set.'\"",
+    "\"Both systems underline the power of compressing experience into a static form that can later be unfolded to produce complexity.\""
+  ]
 }

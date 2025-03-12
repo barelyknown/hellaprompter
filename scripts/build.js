@@ -314,6 +314,9 @@ async function build() {
   // Copy CNAME file
   await fs.copy(path.join(__dirname, '../CNAME'), path.join(DIST_DIR, 'CNAME'));
   
+  // Copy robots.txt file
+  await fs.copy(path.join(__dirname, '../robots.txt'), path.join(DIST_DIR, 'robots.txt'));
+  
   // Store asset paths for use in templates
   const cssPath = `css/${cssDestFilename}`;
   const jsPath = `js/${jsDestFilename}`;

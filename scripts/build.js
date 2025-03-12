@@ -282,6 +282,41 @@ async function generateRssFeed(articles) {
   console.log('RSS feed generated successfully!');
 }
 
+// Function to generate sitemap.xml
+async function generateSitemap(articles) {
+  console.log('Generating sitemap.xml...');
+  
+  const today = new Date().toISOString().split('T')[0];
+  
+  let sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://www.hellaprompter.com/</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>`;
+
+  // Add entries for each article
+  for (const article of articles) {
+    const articleDate = new Date(article.date).toISOString().split('T')[0];
+    sitemapContent += `
+  <url>
+    <loc>https://www.hellaprompter.com/prompts/${article.slug}/</loc>
+    <lastmod>${articleDate}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>`;
+  }
+
+  sitemapContent += `
+</urlset>`;
+
+  // Write the sitemap to file
+  await fs.writeFile(path.join(DIST_DIR, 'sitemap.xml'), sitemapContent);
+  console.log('Sitemap generated successfully!');
+}
+
 async function build() {
   console.log('Building site...');
   
@@ -461,6 +496,9 @@ async function build() {
 
   // Generate RSS feed
   await generateRssFeed(articles);
+  
+  // Generate sitemap
+  await generateSitemap(articles);
 
   console.log('Site built successfully!');
 }

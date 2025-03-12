@@ -1,6 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('Hellaprompter initialized');
-  
   // Setup copy markdown functionality
   const copyMarkdownButton = document.getElementById('copy-markdown-button');
   

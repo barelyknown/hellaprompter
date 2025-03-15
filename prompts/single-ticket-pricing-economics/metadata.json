@@ -1,8 +1,20 @@
 {
   "prompt": "Why is it more expensive per ticket to buy a single ticket on SeatGeak (and probably others) than if you buy two tickets? I would think that single tickets would be less valuable.",
-  "title": "Why Single Tickets Often Cost More per Seat Than Pairs on Resale Platforms (Basketball Focus)",
+  "title": "Why Are Single Tickets More Expensive?",
   "date": "2025-03-15",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "Why Single Tickets Often Cost More per Seat Than Pairs on Resale Platforms (Basketball Focus)",
+  "socialQuestion": "Why Are Single Tickets More Expensive?",
+  "pullQuotes": [
+    "\"Economics predicts that when there are only one or two seats on sale, their price will be higher than if dozens are available.\"",
+    "\"These buyers are competing over a small number of single tickets, which can drive up prices.\"",
+    "\"One ticket broker guide even advises that ‘single reserved seats should only be bought for extremely rare events.’\"",
+    "\"Buying **two tickets** effectively lets you spread that fixed fee across both seats, **reducing the fee per ticket**.\"",
+    "\"the most expensive single ticket posted on StubHub on Friday is listed at $1,632… However, there are better seats for a better price.\""
+  ],
+  "illustrationPath": "illustration-3-1742052481492.png",
+  "sceneDescription": "A single stadium seat is displayed on a small pedestal near a row of empty paired seats in the background. An exaggerated price tag dangles from this lone seat, visibly higher than one hanging from the pair. Spectators strolling past eye it curiously, some with puzzled expressions as they compare the two. The surrounding space is minimal, emphasizing the stark contrast between the solitary seat and its cheaper counterparts.",
+  "illustrationExplanation": "3\n\nIllustration 3 captures the essence of the article well with its clear depiction of the dramatic price difference between the single stadium seat and the regular seats. The humor is subtle yet evident through the exaggerated price tag and the confused expressions of the spectators. The composition is visually appealing, emphasizing the comparison effectively, which aligns with the characteristic style of a New Yorker cartoon."
 }

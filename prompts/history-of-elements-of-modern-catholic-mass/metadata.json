@@ -1,8 +1,20 @@
 {
   "prompt": "I’m interested in the structure of a modern Catholic mass in the US. Go element by element. What has stood the test of time? What is the purpose of each? Give me a thorough explanation of when and why every element was added and its significance.",
-  "title": "The Structure of the Modern Catholic Mass (U.S. Celebration)",
+  "title": "What's the structure of a Catholic Mass?",
   "date": "2025-03-16",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "The Structure of the Modern Catholic Mass (U.S. Celebration)",
+  "socialQuestion": "What's the structure of a Catholic Mass?",
+  "pullQuotes": [
+    "\"It is required on Sundays and holy days in the modern rite, reflecting the importance of explaining God’s Word.\"",
+    "\"By Christ’s authority and the power of the Holy Spirit, the bread and wine are transformed (transubstantiated) into the real Body and Blood of Christ.\"",
+    "\"The liturgy explicitly sends us to 'love and serve the Lord' and to evangelize by our lives.\"",
+    "\"Over time, additional rites and prayers were added around this basic framework.\"",
+    "\"The Mass’s evolution is a case study in this principle – change and continuity in harmony.\""
+  ],
+  "illustrationPath": "illustration-2-1742157411168.png",
+  "sceneDescription": "A single, candlelit aisle stretches toward a simple altar. At the front, a solemn priest in contemporary vestments lifts a chalice, while behind him, a neat line of priests from various centuries waits: one in early Christian robes, another in richly embroidered Renaissance attire, another in post-Vatican II simplicity. Subtle details suggest the slow evolution of vestments and ritual objects. In the pews, a congregation watches attentively, each person quietly representing a different era, hinting at time’s layered impact on one enduring, sacred tradition.",
+  "illustrationExplanation": "2. This illustration best captures the essence of the prompt by effectively showcasing the evolution of vestments through time. It maintains the characteristic New Yorker cartoon style with subtle humor and sophisticated detail. The composition is visually clear, with the congregation attentively witnessing the sacred tradition, emphasizing the article's theme of enduring elements in the Catholic Mass."
 }

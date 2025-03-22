@@ -1,8 +1,20 @@
 {
   "prompt": "Were candidates for the President of the Unites States always lawyers?",
-  "title": "Professional Backgrounds of U.S. Major-Party Presidential Candidates (Lawyers vs. Non-Lawyers)",
+  "title": "Do Lawyers Still Dominate Presidential Candidates?",
   "date": "2025-03-21",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "Professional Backgrounds of U.S. Major-Party Presidential Candidates (Lawyers vs. Non-Lawyers)",
+  "socialQuestion": "Do Lawyers Still Dominate Presidential Candidates?",
+  "pullQuotes": [
+    "\"Overall, candidates with legal backgrounds have won about half of their races (~54%), versus ~49% for those without legal training.\"",
+    "\"In this era, legal training was considered essential for statesmen.\"",
+    "\"None of those Democratic nominees in the 1960s–70s were lawyers, as reflected by the Democratic line hitting 0% in the 1960s–70s on the chart.\"",
+    "\"In the 21st century, communication skills and outsider credibility (even reality TV fame) can propel a candidate without traditional credential.\"",
+    "\"These victories show that voters have at times favored leadership experience outside the courtroom.\""
+  ],
+  "illustrationPath": "illustration-2-1742606734607.png",
+  "sceneDescription": "A line of hopeful candidates stands in front of the White House, each dressed in a neat suit and clutching large law books. At the far end, a smaller group of varied individuals—one in an army uniform, one in a mechanic’s jumpsuit, another in casual business attire—look slightly out of place among the robed, lawyer-like figures. A sense of earnestness hangs in the air as the suit-wearing candidates eye the imposing stack of legal tomes, while the others stand quietly, as though wondering if they belong.",
+  "illustrationExplanation": "2. This illustration captures the essence of the content by clearly depicting the contrast between the lawyer-like candidates with their large law books and the varied individuals in different attire. The visual comedy is subtle, characteristic of New Yorker style, and it retains clarity and sophistication in its composition. The inclusion of everyday professions adds a humorous and relatable touch, enhancing the overall artistic quality."
 }

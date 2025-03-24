@@ -1,8 +1,20 @@
 {
   "prompt": "What are Karl Popper’s 10 most important ideas?",
-  "title": "Karl Popper’s 10 Most Important Philosophical Ideas",
+  "title": "Why Is Falsifiability Key to Science?",
   "date": "2025-03-23",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "Karl Popper’s 10 Most Important Philosophical Ideas",
+  "socialQuestion": "Why Is Falsifiability Key to Science?",
+  "pullQuotes": [
+    "\"the criterion of the scientific status of a theory is its falsifiability, or refutability, or testability.”",
+    "\"the very refutation of a theory… is always a step forward that takes us nearer the truth.”",
+    "\"trying to justify a hypothesis or prove it true is asking the wrong question, a question that “begs for an authoritarian answer”\"",
+    "\"We know nothing—that is the first point. Therefore we should be very modest… we should not claim to know when we do not know.”",
+    "\"I may be wrong and you may be right, and by an effort, we may get nearer to the truth.”"
+  ],
+  "illustrationPath": "illustration-3-1742776646359.png",
+  "sceneDescription": "A lone scientist in a modest lab stands poised with a long butterfly net, ready to snag an oversized, translucent bubble drifting just out of reach. The bubble has a hazy question mark floating within it. Strewn across a nearby table are scattered test tubes and scribbled pages, marked with crossed-out sketches of possible experiments. The scientist’s eyes are locked on the bubble, while a faint sense of determination and uncertainty hangs in the air, capturing the precarious nature of a theory that begs to be tested—and potentially disproven.",
+  "illustrationExplanation": "3\n\nThis illustration best captures the essence of Karl Popper's idea of falsifiability. The stark contrast and simplicity focus attention on the scientist and the bubble, symbolizing the elusive nature of scientific theories and their need for testing. The composition is clear and characteristic of New Yorker style, with a subtle sense of humor and artistic quality."
 }

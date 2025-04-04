@@ -1,8 +1,20 @@
 {
   "prompt": "Give me a modern version of 'The Principles of Scientific Management', keeping all of the original key concepts and structure, but updating the language and examples (while retaining the original vibe).",
-  "title": "The Principles of Scientific Management (Modern Edition)",
+  "title": "Are We Wasting Human Talent Today?",
   "date": "2025-04-04",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "The Principles of Scientific Management (Modern Edition)",
+  "socialQuestion": "Are We Wasting Human Talent Today?",
+  "pullQuotes": [
+    "\"In the past the man was first; in the future the system must be first.\"",
+    "\"The true aim of good management is to make workers more productive in a way that increases their earnings and improves their working conditions…\"",
+    "\"By scientifically designing work, we address the second and third causes of soldiering (flawed practices and natural easiness) directly.\"",
+    "\"Science, not guesswork – Every job is based on laws and facts gleaned from study, not on traditional habits.\"",
+    "\"Cooperation between those who manage and those who do the work is not only possible; it is the most effective route to success.\""
+  ],
+  "illustrationPath": "illustration-3-1743806689684.png",
+  "sceneDescription": "A large conference table dominates an open-plan office, where managers in neat suits fuss over tiny piles of paper scraps and calculator readouts. Nearby, a row of employees sits in identical cubicles, each gazing blankly at computer screens with half-finished tasks open. Stacks of unopened manuals tower behind them like unused potential. On the wall, a massive clock looms, its hands creeping forward. Outside the floor-to-ceiling windows, a bright city skyline hints at endless possibility waiting just beyond the glass.",
+  "illustrationExplanation": "3\n\nIllustration 3 captures the essence of the modern workplace with an emphasis on stacks of unused manuals and the looming clock, reflecting the theme of wasted human talent. The detailed depiction of both managers and employees, combined with the city skyline, mirrors the article's message about untapped potential and efficiency. The style is in line with New Yorker's sophistication and humor, blending clarity with subtle commentary."
 }

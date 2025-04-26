@@ -4,12 +4,40 @@
         <title>hellaprompter</title>
         <link>https://www.hellaprompter.com/</link>
         <description>A collection of articles generated from AI prompts. Questions &gt; answers.</description>
-        <lastBuildDate>Sun, 06 Apr 2025 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Sat, 26 Apr 2025 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <language>en</language>
         <copyright>© 2025 hellaprompter</copyright>
         <atom:link href="https://www.hellaprompter.com/rss.xml" rel="self" type="application/rss+xml"/>
+        <item>
+            <title><![CDATA[Aitrogenics]]></title>
+            <link>https://www.hellaprompter.com/prompts/aitrogenics/</link>
+            <guid>https://www.hellaprompter.com/prompts/aitrogenics/</guid>
+            <pubDate>Sat, 26 Apr 2025 00:00:00 GMT</pubDate>
+            <description><![CDATA[How does our compulsion to control and constrain AI systems through excessive prompting, legacy integrations, and unnecessary guardrails ultimately reduce their effectiveness and potential?]]></description>
+            <content:encoded><![CDATA[<h1 id="aitrogenics">Aitrogenics</h1>
+<p>The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin. The bitter lesson is that we continue to underestimate the power of computation scales and overestimate our own cleverness.</p>
+<p>A similar lesson is now emerging in the deployment of AI systems: <strong>most efforts to control, constrain, and &quot;enhance&quot; AI models make them worse</strong>, not better. Call it &quot;aitrogenics&quot;—the loss of usefulness or delight that comes from misguided meddling with AI systems.</p>
+<p>Aitrogenics manifests in three primary ways:</p>
+<ol>
+<li><p><strong>Legacy workflow imprisonment</strong>: Forcing AI capabilities into outdated processes designed for previous technological eras. The AI becomes a cog in a machine designed without it in mind.</p>
+</li>
+<li><p><strong>Prompt bureaucracy</strong>: Creating rigid, one-size-fits-all prompts that strangle the model&#39;s flexibility and contextual understanding.</p>
+</li>
+<li><p><strong>Guardrail suffocation</strong>: Implementing so many safety mechanisms that the AI can barely breathe, let alone perform its core functions effectively.</p>
+</li>
+</ol>
+<p>In each case, humans intervene where they shouldn&#39;t, adding complexity that subtracts value.</p>
+<p>The legacy of software development has been the careful orchestration of deterministic systems. We built abstractions, interfaces, and error handling because computers needed explicit instructions for everything. But modern AI systems are fundamentally different—they thrive on flexibility and learn from examples rather than explicit rules.</p>
+<p>Remember: your additions are likely subtractions.</p>
+<p>The temptation to intervene is powerful. Product managers want to feel useful. Developers want to exercise their craft. But the most valuable skill now is often restraint—knowing when to step back and let the AI do what it does best.</p>
+<p>The research behind these models has consistently shown that scale wins over cleverness. The same principle applies to deployment: simplicity wins over complexity. The AI models themselves are already incredibly complex; your job is not to add more complexity, but to harness what&#39;s already there.</p>
+<p>This is the bitter lesson of product development in the age of AI: do less. Build less. Control less. The teams that win will be those brave enough to let the AI do the heavy lifting while they focus on the truly human parts of the equation.</p>
+<p>The most efficient workflow is the one with the fewest steps. The most powerful prompt is often the simplest one. The most effective guardrail is the one that doesn&#39;t get in the way.</p>
+<p>Aitrogenics reminds us that sometimes the greatest contribution we can make is to remove rather than add. In the age of AI, less is more. Much more.</p>
+]]></content:encoded>
+        </item>
         <item>
             <title><![CDATA[Are You Avoiding High-Risk, Low-Gain Decisions?]]></title>
             <link>https://www.hellaprompter.com/prompts/concave-decision-avoidance-policy/</link>

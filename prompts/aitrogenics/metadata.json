@@ -4,5 +4,8 @@
   "date": "2025-04-26",
   "service": "Anthropic Claude 3.7",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "illustrationPath": "illustration-2-1745680360561.png",
+  "sceneDescription": "A sleek, futuristic computer tower brimming with potential is wedged behind a cluttered office desk, wrapped in layers of red tape and held down by stacks of dusty binders. Well-meaning office workers in crisp suits keep adding more tape and binders, each fixated on attaching their own rules and forms. The tower flickers and hums, but every new strip of tape and binder causes its glow to dim, capturing the moment it’s stifled by excessive constraints.",
+  "illustrationExplanation": "2\n\nThis illustration best captures the essence of the article by showing a futuristic computer being restricted by red tape, symbolizing excessive constraints. The office workers' engagement with the tape and binders effectively conveys the idea of stifling potential through control. The style aligns well with The New Yorker’s subtle humor, and the image's composition is clear and balanced."
 }

@@ -1,8 +1,20 @@
 {
   "prompt": "What are the non-alcoholic ingredients for a slow drink?",
-  "title": "Slow Drink Ingredients",
+  "title": "What's the secret to slow-sipping drinks?",
   "date": "2025-05-05",
   "service": "ChatGPT Deep Research",
   "postToX": true,
-  "illustration": true
+  "illustration": true,
+  "originalTitle": "Slow Drink Ingredients",
+  "socialQuestion": "What's the secret to slow-sipping drinks?",
+  "pullQuotes": [
+    "\"By adjusting texture, temperature, spice level, flavor intensity, aroma, carbonation, or even the drink’s structure, you can encourage small sips instead of gulps.\"",
+    "\"You can’t just guzzle a drink that contains dozens of little chewy balls without pausing to chew, so this inclusion enforces a slower pace.\"",
+    "\"When a beverage burns your tongue or makes you break into a sweat, you’re compelled to sip it slowly (or reach for water).\"",
+    "\"Many traditional apéritifs and digestifs (even non-alcoholic ones) are bitter for this reason – they are meant to be savoured in small quantities.\"",
+    "\"Visually layered drinks, drinks with multiple phases or textures, and interactive elements all prompt the drinker to take their time.\""
+  ],
+  "illustrationPath": "illustration-2-1746493636774.png",
+  "sceneDescription": "A lone, pensive bartender stands behind a spotless counter. They hold a tall, curvy glass filled with a thick, textured mixture, an oversized chili pepper perched on the rim and a swirl of citrus peel dangling precariously. Wisps of steam rise from the top, contrasting with frosty condensation on the lower part of the glass. Nearby, a quietly astonished patron gingerly tilts the glass, carefully navigating the thick liquid and hefty garnishes. The mood is refined yet faintly comedic, emphasizing the complicated, non-alcoholic concoction that begs to be sipped slowly.",
+  "illustrationExplanation": "2\n\nThis illustration best captures the essence of the article with a comedic yet refined touch. The exaggerated size and complexity of the drink with its oversized chili pepper and steam create visual interest and highlight the \"slow-sipping\" challenge. The expressions on the bartender and patron add to the humor. The composition is clear and sophisticated, aligning well with the New Yorker's style."
 }

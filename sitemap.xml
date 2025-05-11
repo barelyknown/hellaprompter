@@ -2,9 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.hellaprompter.com/</loc>
-    <lastmod>2025-05-06</lastmod>
+    <lastmod>2025-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.hellaprompter.com/prompts/selfish-job/</loc>
+    <lastmod>2025-05-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.hellaprompter.com/prompts/slow-drink-ingredients/</loc>
